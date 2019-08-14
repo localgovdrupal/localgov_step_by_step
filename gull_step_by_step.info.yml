@@ -1,0 +1,5 @@
+name: Step by step
+type: module
+description: Provides the Step-by-step page.
+package: Gull
+core: 8.x

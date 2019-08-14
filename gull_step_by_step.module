@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Module file.
+ *
+ * Implements hooks.
+ */
+
+/**
+ * Implements hook_theme().
+ *
+ * Provides the following themes:
+ * - Step by step navigation view's Navigation block.
+ */
+function gull_step_by_step_theme() {
+
+  return [
+    'views_view_unformatted__step_by_step_navigation__steps' => [
+      'base hook' => 'views_view_unformatted',
+    ]
+  ];
+}
