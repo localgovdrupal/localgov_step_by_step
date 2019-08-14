@@ -16,8 +16,8 @@
 function gull_step_by_step_theme() {
 
   return [
-    'views_view_unformatted__step_by_step_navigation__steps' => [
-      'base hook' => 'views_view_unformatted',
+    'views_view_list__step_by_step_navigation__steps' => [
+      'base hook' => 'views_view_list',
     ]
   ];
 }
