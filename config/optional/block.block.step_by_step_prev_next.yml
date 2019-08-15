@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.step_by_step_navigation
+  module:
+    - ctools
+    - views
+id: step_by_step_prev_next
+region: content
+weight: 0
+provider: null
+plugin: 'views_block:step_by_step_navigation-prev_next'
+settings:
+  id: 'views_block:step_by_step_navigation-prev_next'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+  context_mapping: {  }
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      step_by_step_page: step_by_step_page
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
