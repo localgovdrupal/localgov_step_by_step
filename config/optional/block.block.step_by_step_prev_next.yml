@@ -6,7 +6,10 @@ dependencies:
   module:
     - ctools
     - views
+  theme:
+    - seven
 id: step_by_step_prev_next
+theme: seven
 region: content
 weight: 0
 provider: null
