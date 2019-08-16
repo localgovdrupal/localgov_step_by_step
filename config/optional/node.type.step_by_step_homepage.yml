@@ -1,0 +1,17 @@
+uuid: 4dc449be-0c0c-45ec-86d2-76208cb7ddaf
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: 'Step by step homepage'
+type: step_by_step_homepage
+description: ''
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: true

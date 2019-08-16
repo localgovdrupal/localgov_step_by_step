@@ -1,0 +1,8 @@
+uuid: e63dcd7b-e7c8-4644-889b-b8698c10b2be
+langcode: en
+status: true
+dependencies: {  }
+name: Topic
+vid: topic
+description: 'Topic tags group together related content across all services'
+weight: 0

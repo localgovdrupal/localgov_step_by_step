@@ -1,0 +1,21 @@
+uuid: f85ae8bf-e835-4c8f-9c60-502997e45383
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_step_summary
+    - node.type.step_by_step_page
+  module:
+    - text
+id: node.step_by_step_page.field_step_summary
+field_name: field_step_summary
+entity_type: node
+bundle: step_by_step_page
+label: 'Step summary'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

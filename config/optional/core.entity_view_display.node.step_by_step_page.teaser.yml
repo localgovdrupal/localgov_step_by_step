@@ -1,0 +1,31 @@
+uuid: b24f6297-da3f-427c-9f2c-94a5979c54d8
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.step_by_step_page.body
+    - node.type.step_by_step_page
+  module:
+    - text
+    - user
+id: node.step_by_step_page.teaser
+targetEntityType: node
+bundle: step_by_step_page
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  search_api_excerpt: true

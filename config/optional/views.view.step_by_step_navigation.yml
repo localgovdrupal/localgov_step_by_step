@@ -426,7 +426,7 @@ display:
           plugin_id: node_nid
       display_extenders:
         metatag_display_extender: {  }
-      display_comment: "Lists Step by step pages belonging to a Step by step *homepage*.  This homepage is derived from the currently displayed Step by step page.\r\n\r\nThe block from the \"Navigation block\" display is meant to be used in Step by step pages only.\r\n\r\nUses a custom theme template for the \"Navigation block\" display.  @see modules/custom/gull_step_by_step/views-view-unformatted--step-by-step-navigation--steps.html.twig"
+      display_comment: "Lists Step by step pages belonging to a Step by step *homepage*.  This homepage is derived from the currently displayed Step by step page.\r\n\r\nThe blocks from the \"Navigation block\" and \"Prev/Next step\" displays are meant to be used in Step by step pages only.\r\n\r\nWe use a custom theme template for the \"Prev/Next step\" display.  @see modules/custom/gull_step_by_step/views-view-list--step-by-step-navigation--prev-next.html.twig"
       css_class: step-by-step-pages
     cache_metadata:
       max-age: -1

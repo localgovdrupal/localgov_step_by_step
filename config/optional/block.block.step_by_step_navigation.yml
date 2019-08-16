@@ -1,0 +1,30 @@
+uuid: 6baf4677-09c9-46d7-b907-a16cf5c316a3
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.step_by_step_navigation
+  module:
+    - ctools
+    - views
+id: step_by_step_navigation
+region: content
+weight: 0
+provider: null
+plugin: 'views_block:step_by_step_navigation-steps'
+settings:
+  id: 'views_block:step_by_step_navigation-steps'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+  context_mapping: {  }
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      step_by_step_page: step_by_step_page
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
