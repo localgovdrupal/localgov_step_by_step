@@ -111,7 +111,7 @@ function _gull_step_by_step_find_prev_next_steps(string $current_nid, array &$va
   $next_step_index = -1;
 
   foreach ($variables['rows'] as $key => $row) {
-    $row_nid = $row['content']['#row']->nid ?? '-1';
+    $row_nid = $row['content']['#row']->node_field_data_node__field_guide_pages_1_nid ?? '-1';
     $is_current_step = ($row_nid === $current_nid);
 
     if ($is_current_step) {
@@ -124,8 +124,8 @@ function _gull_step_by_step_find_prev_next_steps(string $current_nid, array &$va
 
   $variables['has_prev_step'] = array_key_exists($prev_step_index, $variables['rows']);
   $variables['has_next_step'] = array_key_exists($next_step_index, $variables['rows']);
-  $variables['prev_step_nid'] = $variables['rows'][$prev_step_index]['content']['#row']->nid ?? -1;
-  $variables['next_step_nid'] = $variables['rows'][$next_step_index]['content']['#row']->nid ?? -1;
+  $variables['prev_step_nid'] = $variables['rows'][$prev_step_index]['content']['#row']->node_field_data_node__field_guide_pages_1_nid ?? -1;
+  $variables['next_step_nid'] = $variables['rows'][$next_step_index]['content']['#row']->node_field_data_node__field_guide_pages_1_nid ?? -1;
   $variables['prev_step_link_text'] = t('Prev');
 
   $is_first_step = ($next_step_index === 1);
@@ -138,7 +138,7 @@ function _gull_step_by_step_find_prev_next_steps(string $current_nid, array &$va
 function _gull_step_by_step_mark_current_step(string $current_nid, array &$variables): void {
 
   foreach ($variables['rows'] as &$row) {
-    $row_nid = $row['content']['#row']->nid ?? '-1';
+    $row_nid = $row['content']['#row']->node_field_data_node__field_guide_pages_1_nid ?? '-1';
 
     $is_current_step = ($row_nid === $current_nid);
     if ($is_current_step) {
