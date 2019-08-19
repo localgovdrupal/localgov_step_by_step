@@ -9,6 +9,8 @@
 
 declare(strict_types = 1);
 
+use Drupal\Core\Entity\EntityInterface;
+
 /**
  * Implements hook_theme().
  *
@@ -22,6 +24,53 @@ function gull_step_by_step_theme() {
       'base hook' => 'views_view_list',
     ],
   ];
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ */
+function gull_step_by_step_node_insert(EntityInterface $entity) {
+
+  gull_step_by_step_node_update($entity);
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_update().
+ *
+ * The step_by_step_homepage and step_by_step_page content types reference each
+ * other.  When a step_by_step_page type node is updated, find its
+ * step_by_step_homepage node.  Then make sure this step_by_step_homepage node
+ * refers back to the step_by_step_page node.
+ */
+function gull_step_by_step_node_update(EntityInterface $entity) {
+
+  $is_not_step_by_step_page_node = ($entity->bundle() !== 'step_by_step_page');
+  if ($is_not_step_by_step_page_node) {
+    return;
+  }
+
+  $step_by_step_page_node = $entity;
+  $step_by_step_page_nid = $step_by_step_page_node->id();
+
+  $step_by_step_homepage_node = $step_by_step_page_node->field_guide_parent->entity ?? FALSE;
+  if (empty($step_by_step_homepage_node)) {
+    return;
+  }
+
+  try {
+    $has_ref_to_this_step_by_step_page = array_filter($step_by_step_homepage_node->field_guide_pages->referencedEntities(), function (EntityInterface $page_node) use ($step_by_step_page_nid): bool {
+      return $page_node->id() === $step_by_step_page_nid;
+    });
+    if ($has_ref_to_this_step_by_step_page) {
+      return;
+    }
+
+    $step_by_step_homepage_node->field_guide_pages->appendItem($step_by_step_page_nid);
+    $step_by_step_homepage_node->save();
+  }
+  catch (Exception $e) {
+    Drupal::service('logger.factory')->get('step-by-step')->error($e->getMessage());
+  }
 }
 
 /**
