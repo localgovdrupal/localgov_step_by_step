@@ -25,6 +25,8 @@
  * - has_next_step: Have we got a ntext step node?
  * - prev_step_nid: Node Id of the previous node, if any.
  * - next_step_nid: Node Id of the next node, if any.
+ * - prev_step_index: Array index of the previous node, if any.
+ * - next_step_index: Array index of the next node, if any.
  * - prev_step_link_text: Prev
  * - next_step_link_text: Start|Next
  *
@@ -44,13 +46,13 @@
 
   <{{ list.type }}{{ list.attributes }}>
     {% if has_prev_step %}
-      <li{{ prev_step_attr.addClass('step--prev') }}>
+      <li{{ rows[prev_step_index].attributes.addClass('step--prev') }}>
         <a href="{{ path('entity.node.canonical', {'node': prev_step_nid }) }}">{{ prev_step_link_text }}</a>
       </li>
     {% endif %}
 
     {% if has_next_step %}
-      <li{{ next_step_attr.addClass('step--next') }}>
+      <li{{ rows[next_step_index].attributes.addClass('step--next') }}>
         <a href="{{ path('entity.node.canonical', {'node': next_step_nid }) }}">{{ next_step_link_text }}</a>
       </li>
     {% endif %}

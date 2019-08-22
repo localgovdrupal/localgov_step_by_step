@@ -95,6 +95,8 @@ function gull_step_by_step_preprocess_views_view_list(array &$variables) {
   }
   elseif ($is_step_by_step_nav and $is_step_by_step_nav_block) {
     _gull_step_by_step_mark_current_step($current_nid, $variables);
+
+    $variables['view']->element['#attached']['library'][] = 'gull_step_by_step/step-by-step-nav';
   }
 }
 
@@ -127,6 +129,8 @@ function _gull_step_by_step_find_prev_next_steps(string $current_nid, array &$va
   $variables['prev_step_nid'] = $variables['rows'][$prev_step_index]['content']['#row']->node_field_data_node__field_guide_pages_1_nid ?? -1;
   $variables['next_step_nid'] = $variables['rows'][$next_step_index]['content']['#row']->node_field_data_node__field_guide_pages_1_nid ?? -1;
   $variables['prev_step_link_text'] = t('Prev');
+  $variables['prev_step_index'] = $prev_step_index;
+  $variables['next_step_index'] = $next_step_index;
 
   $is_first_step = ($next_step_index === 1);
   $variables['next_step_link_text'] = $is_first_step ? t('Start') : t('Next');

@@ -1,0 +1,21 @@
+/**
+ * @file
+ * Style rules for the Step by step navigation and Prev/Next links.
+ */
+
+.step-by-step-pages {
+}
+
+.step-by-step-pages--nav {
+}
+.step-by-step-pages--nav .step {
+}
+.step-by-step-pages--nav .is-current-step {
+}
+
+.step-by-step-pages--prev-next .step {
+}
+.step-by-step-pages--prev-next .step--prev {
+}
+.step-by-step-pages--prev-next .step--next {
+}
