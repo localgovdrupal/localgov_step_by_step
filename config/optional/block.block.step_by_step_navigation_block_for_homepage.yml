@@ -1,0 +1,32 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.step_by_step_navigation
+  module:
+    - ctools
+    - views
+  theme:
+    - bartik
+id: step_by_step_navigation_block_for_homepage
+theme: bartik
+region: content
+weight: 200
+provider: null
+plugin: 'views_block:step_by_step_navigation-steps_for_homepage'
+settings:
+  id: 'views_block:step_by_step_navigation-steps_for_homepage'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+  context_mapping: {  }
+visibility:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      step_by_step_homepage: step_by_step_homepage
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'

@@ -4,11 +4,14 @@ dependencies:
   config:
     - field.storage.node.field_guide_parent
     - field.storage.node.field_step_summary
+    - node.type.step_by_step_homepage
     - node.type.step_by_step_page
   module:
     - node
     - text
     - user
+_core:
+  default_config_hash: uLJVkWkbzJp38WespuE3bjVEmfr34-HPF37RRnuDjng
 id: step_by_step_navigation
 label: 'Step by step navigation'
 module: views
@@ -74,7 +77,7 @@ display:
           id: nid
           table: node_field_data
           field: nid
-          relationship: none
+          relationship: field_guide_pages_1
           group_type: group
           admin_label: ''
           label: ''
@@ -140,7 +143,7 @@ display:
           id: field_guide_parent
           table: node__field_guide_parent
           field: field_guide_parent
-          relationship: none
+          relationship: field_guide_pages_1
           group_type: group
           admin_label: ''
           label: ''
@@ -203,7 +206,7 @@ display:
           id: title
           table: node_field_data
           field: title
-          relationship: none
+          relationship: field_guide_pages_1
           group_type: group
           admin_label: ''
           label: ''
@@ -266,7 +269,7 @@ display:
           id: field_step_summary
           table: node__field_step_summary
           field: field_step_summary
-          relationship: none
+          relationship: field_guide_pages_1
           group_type: group
           admin_label: ''
           label: ''
@@ -336,60 +339,48 @@ display:
           expose:
             operator: ''
           group: 1
-        type:
-          id: type
-          table: node_field_data
-          field: type
-          value:
-            step_by_step_page: step_by_step_page
-          entity_type: node
-          entity_field: type
-          plugin_id: bundle
-      sorts:
-        delta:
-          id: delta
-          table: node__field_guide_pages
-          field: delta
-          relationship: none
-          group_type: group
-          admin_label: ''
-          order: ASC
-          exposed: false
-          expose:
-            label: ''
-          plugin_id: standard
+      sorts: {  }
       title: 'Step by step navigation'
       header: {  }
       footer: {  }
       empty: {  }
       relationships:
-        field_guide_parent:
-          id: field_guide_parent
-          table: node__field_guide_parent
-          field: field_guide_parent
+        field_guide_pages:
+          id: field_guide_pages
+          table: node__field_guide_pages
+          field: field_guide_pages
           relationship: none
           group_type: group
-          admin_label: 'Step by step homepage Referenced Step by step page'
+          admin_label: 'Step by step pages referenced from Step by step homepages'
           required: false
           plugin_id: standard
-        reverse__node__field_guide_parent:
-          id: reverse__node__field_guide_parent
+        reverse__node__field_guide_pages:
+          id: reverse__node__field_guide_pages
           table: node_field_data
-          field: reverse__node__field_guide_parent
-          relationship: field_guide_parent
+          field: reverse__node__field_guide_pages
+          relationship: field_guide_pages
           group_type: group
-          admin_label: 'Step by step page Referencing Step by step homepage'
+          admin_label: 'Step by step homepages'
           required: false
           entity_type: node
           plugin_id: entity_reverse
+        field_guide_pages_1:
+          id: field_guide_pages_1
+          table: node__field_guide_pages
+          field: field_guide_pages
+          relationship: reverse__node__field_guide_pages
+          group_type: group
+          admin_label: 'Step by step pages referenced from Step by step homepages'
+          required: true
+          plugin_id: standard
       arguments:
         nid:
           id: nid
           table: node_field_data
           field: nid
-          relationship: reverse__node__field_guide_parent
+          relationship: field_guide_pages
           group_type: group
-          admin_label: ''
+          admin_label: 'Step by step page node ID'
           default_action: default
           exception:
             value: all
@@ -426,8 +417,12 @@ display:
           plugin_id: node_nid
       display_extenders:
         metatag_display_extender: {  }
-      display_comment: "Lists Step by step pages belonging to a Step by step *homepage*.  This homepage is derived from the currently displayed Step by step page.\r\n\r\nThe blocks from the \"Navigation block\" and \"Prev/Next step\" displays are meant to be used in Step by step pages only.\r\n\r\nWe use a custom theme template for the \"Prev/Next step\" display.  @see modules/custom/gull_step_by_step/views-view-list--step-by-step-navigation--prev-next.html.twig"
+      display_comment: "Lists Step by step pages belonging to a Step by step *homepage*.  This homepage is derived from the currently displayed Step by step page.\r\n\r\nThe blocks from the \"Navigation block\" and \"Prev/Next step\" displays are meant to be used in Step by step pages only.\r\n\r\nWe use a custom theme template for the \"Prev/Next step\" display.  Custom theme template variables are inserted from a template preprocess function.  This function is dependent on the content ID field whose column name is node_field_data_node__field_guide_pages_1_nid at present.\r\n@see gull_step_by_step_preprocess_views_view_list()\r\n@see modules/custom/gull_step_by_step/views-view-list--step-by-step-navigation--prev-next.html.twig"
       css_class: step-by-step-pages
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
     cache_metadata:
       max-age: -1
       contexts:
@@ -454,7 +449,7 @@ display:
           id: nid
           table: node_field_data
           field: nid
-          relationship: none
+          relationship: field_guide_pages_1
           group_type: group
           admin_label: ''
           label: ''
@@ -520,7 +515,7 @@ display:
           id: field_guide_parent
           table: node__field_guide_parent
           field: field_guide_parent
-          relationship: none
+          relationship: field_guide_pages_1
           group_type: group
           admin_label: ''
           label: ''
@@ -583,7 +578,7 @@ display:
           id: title
           table: node_field_data
           field: title
-          relationship: none
+          relationship: field_guide_pages_1
           group_type: group
           admin_label: ''
           label: ''
@@ -646,7 +641,7 @@ display:
           id: field_step_summary
           table: node__field_step_summary
           field: field_step_summary
-          relationship: none
+          relationship: field_guide_pages_1
           group_type: group
           admin_label: ''
           label: ''
@@ -708,6 +703,8 @@ display:
         fields: false
         style: true
         row: true
+        css_class: false
+      css_class: 'step-by-step-pages step-by-step--prev-next'
     cache_metadata:
       max-age: -1
       contexts:
@@ -745,6 +742,7 @@ display:
         header: false
         style: false
         row: false
+        css_class: false
       style:
         type: html_list
         options:
@@ -761,6 +759,85 @@ display:
           inline: {  }
           separator: ''
           hide_empty: false
+      css_class: 'step-by-step-pages step-by-step-pages--nav'
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - 'user.node_grants:view'
+        - user.permissions
+      tags:
+        - 'config:field.storage.node.field_guide_parent'
+        - 'config:field.storage.node.field_step_summary'
+  steps_for_homepage:
+    display_plugin: block
+    id: steps_for_homepage
+    display_title: 'Homepage navigation block'
+    position: 3
+    display_options:
+      display_extenders:
+        metatag_display_extender: {  }
+      arguments:
+        nid:
+          id: nid
+          table: node_field_data
+          field: nid
+          relationship: none
+          group_type: group
+          admin_label: 'Step by step homepage node ID'
+          default_action: default
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: node
+          default_argument_options: {  }
+          default_argument_skip_url: false
+          summary_options:
+            base_path: ''
+            count: true
+            items_per_page: 25
+            override: false
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: true
+          validate:
+            type: 'entity:node'
+            fail: 'access denied'
+          validate_options:
+            bundles:
+              step_by_step_homepage: step_by_step_homepage
+            operation: view
+            multiple: 0
+            access: false
+          break_phrase: false
+          not: false
+          entity_type: node
+          entity_field: nid
+          plugin_id: node_nid
+      defaults:
+        arguments: false
+        relationships: false
+        css_class: false
+      relationships:
+        field_guide_pages_1:
+          id: field_guide_pages_1
+          table: node__field_guide_pages
+          field: field_guide_pages
+          relationship: none
+          group_type: group
+          admin_label: 'Step by step pages referenced from Step by step homepages'
+          required: true
+          plugin_id: standard
+      css_class: 'step-by-step-pages step-by-step-pages--nav'
+      display_description: 'List Step by step pages belonging to a Step by step homepage.'
+      block_description: 'Step by step navigation for Step homepage'
     cache_metadata:
       max-age: -1
       contexts:
