@@ -4,7 +4,7 @@ dependencies:
   config:
     - views.view.step_by_step_navigation
   module:
-    - ctools
+    - node
     - views
   theme:
     - bartik
@@ -23,8 +23,8 @@ settings:
   items_per_page: none
   context_mapping: {  }
 visibility:
-  'entity_bundle:node':
-    id: 'entity_bundle:node'
+  node_type:
+    id: node_type
     bundles:
       step_by_step_page: step_by_step_page
     negate: false

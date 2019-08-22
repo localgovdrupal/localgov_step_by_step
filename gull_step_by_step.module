@@ -96,6 +96,9 @@ function gull_step_by_step_preprocess_views_view_list(array &$variables) {
   elseif ($is_step_by_step_nav and $is_step_by_step_nav_block) {
     _gull_step_by_step_mark_current_step($current_nid, $variables);
 
+  }
+
+  if ($is_step_by_step_nav) {
     $variables['view']->element['#attached']['library'][] = 'gull_step_by_step/step-by-step-nav';
   }
 }

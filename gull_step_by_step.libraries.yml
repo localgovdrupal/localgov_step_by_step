@@ -1,3 +1,6 @@
 step-by-step-nav:
   js:
     js/step-by-step-nav.js: {}
+  css:
+    base:
+      css/step-by-step-nav.css: {}

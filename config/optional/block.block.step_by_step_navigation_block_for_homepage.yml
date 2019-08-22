@@ -8,14 +8,14 @@ dependencies:
     - views
   theme:
     - bartik
-id: step_by_step_prev_next
+id: step_by_step_navigation_block_for_homepage
 theme: bartik
 region: content
-weight: 100
+weight: 200
 provider: null
-plugin: 'views_block:step_by_step_navigation-prev_next'
+plugin: 'views_block:step_by_step_navigation-steps_for_homepage'
 settings:
-  id: 'views_block:step_by_step_navigation-prev_next'
+  id: 'views_block:step_by_step_navigation-steps_for_homepage'
   label: ''
   provider: views
   label_display: '0'
@@ -26,7 +26,7 @@ visibility:
   node_type:
     id: node_type
     bundles:
-      step_by_step_page: step_by_step_page
+      step_by_step_homepage: step_by_step_homepage
     negate: false
     context_mapping:
       node: '@node.node_route_context:node'

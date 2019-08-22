@@ -9,7 +9,6 @@ dependencies:
     - field.field.node.step_by_step_page.field_topic_term
     - node.type.step_by_step_page
   module:
-    - content_moderation
     - path
     - text
 id: node.step_by_step_page.default

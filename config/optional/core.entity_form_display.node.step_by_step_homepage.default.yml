@@ -8,7 +8,6 @@ dependencies:
     - field.field.node.step_by_step_homepage.field_topic_term
     - node.type.step_by_step_homepage
   module:
-    - content_moderation
     - path
     - text
 id: node.step_by_step_homepage.default
