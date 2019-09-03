@@ -131,12 +131,12 @@ function _gull_step_by_step_find_prev_next_steps(string $current_nid, array &$va
   $variables['has_next_step'] = array_key_exists($next_step_index, $variables['rows']);
   $variables['prev_step_nid'] = $variables['rows'][$prev_step_index]['content']['#row']->node_field_data_node__field_guide_pages_1_nid ?? -1;
   $variables['next_step_nid'] = $variables['rows'][$next_step_index]['content']['#row']->node_field_data_node__field_guide_pages_1_nid ?? -1;
-  $variables['prev_step_link_text'] = t('Prev');
+  $variables['prev_step_link_text'] = t('Previous Step');
   $variables['prev_step_index'] = $prev_step_index;
   $variables['next_step_index'] = $next_step_index;
 
   $is_first_step = ($next_step_index === 1);
-  $variables['next_step_link_text'] = $is_first_step ? t('Start') : t('Next');
+  $variables['next_step_link_text'] = $is_first_step ? t('Start') : t('Next Step');
 }
 
 /**
@@ -149,7 +149,7 @@ function _gull_step_by_step_mark_current_step(string $current_nid, array &$varia
 
     $is_current_step = ($row_nid === $current_nid);
     if ($is_current_step) {
-      $row['attributes']['class'][] = 'is-current-step';
+      $row['attributes']['class'][] = 'step--active';
       break;
     }
   }
