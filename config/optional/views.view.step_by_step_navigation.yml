@@ -64,7 +64,7 @@ display:
           default_row_class: false
           type: ul
           wrapper_class: ''
-          class: step-buttons
+          class: step-list
       row:
         type: fields
         options:
