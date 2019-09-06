@@ -62,7 +62,7 @@ display:
           grouping: {  }
           row_class: step
           default_row_class: false
-          type: ul
+          type: ol
           wrapper_class: ''
           class: step-list
       row:
@@ -417,7 +417,7 @@ display:
           plugin_id: node_nid
       display_extenders:
         metatag_display_extender: {  }
-      display_comment: "Lists Step by step pages belonging to a Step by step *homepage*.  This homepage is derived from the currently displayed Step by step page.\r\n\r\nThe blocks from the \"Navigation block\" and \"Prev/Next step\" displays are meant to be used in Step by step pages only.\r\n\r\nWe use a custom theme template for the \"Prev/Next step\" display.  Custom theme template variables are inserted from a template preprocess function.  This function is dependent on the content ID field whose column name is node_field_data_node__field_guide_pages_1_nid at present.\r\n@see gull_step_by_step_preprocess_views_view_list()\r\n@see modules/custom/gull_step_by_step/views-view-list--step-by-step-navigation--prev-next.html.twig"
+      display_comment: "Lists Step by step pages belonging to a Step by step *homepage*.  This homepage is derived either from the current page or from the currently displayed Step by step page.\r\n\r\nThe blocks from the \"Navigation block\" and \"Prev/Next step\" displays are meant to be used in Step by step pages only.  The \"Homepage navigation block\" is meant to be used in Step by step homepages.\r\n\r\nWe use a custom theme template for the \"Prev/Next step\" display.  Custom theme template variables are inserted from a template preprocess function.  This function is dependent on the content ID field whose column name is node_field_data_node__field_guide_pages_1_nid at present.\r\n@see gull_step_by_step_preprocess_views_view_list()\r\n@see modules/custom/gull_step_by_step/views-view-list--step-by-step-navigation--prev-next.html.twig"
       css_class: step-by-step-pages
       filter_groups:
         operator: AND
@@ -701,10 +701,26 @@ display:
           plugin_id: field
       defaults:
         fields: false
-        style: true
-        row: true
+        style: false
+        row: false
         css_class: false
       css_class: 'step-by-step-pages step-by-step--prev-next'
+      style:
+        type: html_list
+        options:
+          grouping: {  }
+          row_class: step
+          default_row_class: false
+          type: ul
+          wrapper_class: ''
+          class: step-list
+      row:
+        type: fields
+        options:
+          default_field_elements: false
+          inline: {  }
+          separator: ''
+          hide_empty: false
     cache_metadata:
       max-age: -1
       contexts:
@@ -740,25 +756,9 @@ display:
           plugin_id: text_custom
       defaults:
         header: false
-        style: false
-        row: false
+        style: true
+        row: true
         css_class: false
-      style:
-        type: html_list
-        options:
-          grouping: {  }
-          row_class: step
-          default_row_class: false
-          type: ol
-          wrapper_class: ''
-          class: step-list
-      row:
-        type: fields
-        options:
-          default_field_elements: false
-          inline: {  }
-          separator: ''
-          hide_empty: false
       css_class: 'step-by-step-pages step-by-step-pages--nav'
     cache_metadata:
       max-age: -1
