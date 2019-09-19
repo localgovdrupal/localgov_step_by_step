@@ -4,6 +4,10 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.step_by_step_page.body
+    - field.field.node.step_by_step_page.field_guide_parent
+    - field.field.node.step_by_step_page.field_guide_section_title
+    - field.field.node.step_by_step_page.field_step_summary
+    - field.field.node.step_by_step_page.field_topic_term
     - node.type.step_by_step_page
   module:
     - text
@@ -27,4 +31,8 @@ content:
     third_party_settings: {  }
     region: content
 hidden:
+  field_guide_parent: true
+  field_guide_section_title: true
+  field_step_summary: true
+  field_topic_term: true
   search_api_excerpt: true
