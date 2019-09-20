@@ -3,7 +3,7 @@
 ## What is it?
 This module attempts to implement the Gov.uk [Step by step navigation](https://design-system.service.gov.uk/patterns/step-by-step-navigation/) journeys.
 
-Our implementation provides a *Step by step homepage* content type that refer to several pages of the the *Step by step page* content type.  When this homepage or any of the Step by step pages is viewed, the Step by step navigation appears.  This navigation lists all the Step by step pages belonging to the related Step by step homepage.
+Our implementation provides a *Step by step homepage* content type that refers to several pages of the *Step by step page* content type.  When this homepage or any of the Step by step pages is viewed, the Step by step navigation appears.  This navigation lists all the Step by step pages belonging to the related Step by step homepage.
 
 ## What is in it?
 - 2 x Content types:
@@ -22,7 +22,7 @@ Our implementation provides a *Step by step homepage* content type that refer to
   - config/optional/block.block.step_by_step_prev_next.yml
 
   You can revert these changes after module installation as these files are no longer needed.
-- Alternatively, add these three blocks from the Drupal block layout admin page where they should appear after the "Main page content" block.
+- Alternatively, add these three blocks from the Drupal block layout admin page.  The Prev/Next block should be placed after the "Main page content" block.  The other two Step by step navigation blocks can be placed in the second sidebar or after the "Main page content" block based on your preferences.
 
 ## How to use it
 - Add one or more Step by step homepages.
@@ -30,8 +30,14 @@ Our implementation provides a *Step by step homepage* content type that refer to
 - To reorder the Step by step pages, edit the related Step by step homepage and drag the Step by step pages.
 
 ## Configuration update
-Use the Features module to *reimport* Drupal configurations carried by this
+Use the [Features](https://www.drupal.org/project/features) module to *reimport* Drupal configurations carried by this
 module:
 ```
 $ drush features:import gull_step_by_step
 ```
+
+## Limitations
+Unlike the gov.uk Step by step prototype, we do not provide pages for substeps.
+
+## Known bugs
+If you *change* the Step by step homepage of a Step by step page, the old homepage will still refer to the Step by step page.  This breaks the Step by step navigation.  In such scenarios, manually remove the reference to the Step by step page from the old Step by step homepage.  A fix has been planned.
