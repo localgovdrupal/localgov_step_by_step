@@ -47,14 +47,14 @@
   <{{ list.type }}{{ list.attributes }}>
     {% if has_prev_step %}
       <li{{ rows[prev_step_index].attributes.addClass('step--prev') }}>
-        <button type="button" onclick="location.href='{{ path('entity.node.canonical', {'node': prev_step_nid }) }}'" class="btn btn-carbon"><span class="oi oi-chevron-left"></span>{{ prev_step_link_text }}</button>
+        <button type="button" onclick="location.href='{{ path('entity.node.canonical', {'node': prev_step_nid }) }}'" class="btn btn-carbon"><span class="fa fa-chevron-left"></span>{{ prev_step_link_text }}</button>
       </li>
     {% endif %}
 
     {% if has_next_step %}
       <li{{ rows[next_step_index].attributes.addClass('step--next') }}>
         
-        <button type="button" onclick="location.href='{{ path('entity.node.canonical', {'node': next_step_nid }) }}'" class="btn btn-primary"><span class="oi oi-chevron-right"></span>{{ next_step_link_text }}</button>
+        <button type="button" onclick="location.href='{{ path('entity.node.canonical', {'node': next_step_nid }) }}'" class="btn btn-primary"><span class="fa fa-chevron-right"></span>{{ next_step_link_text }}</button>
       </li>
     {% endif %}
   </{{ list.type }}>
