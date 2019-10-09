@@ -7,10 +7,10 @@ dependencies:
     - node
     - views
   theme:
-    - croydon
+    - bartik
 id: step_by_step_navigation_block_for_homepage
-theme: croydon
-region: content
+theme: bartik
+region: sidebar_second
 weight: 200
 provider: null
 plugin: 'views_block:step_by_step_navigation-steps_for_homepage'

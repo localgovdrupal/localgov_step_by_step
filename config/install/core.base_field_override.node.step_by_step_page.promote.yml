@@ -1,13 +1,12 @@
-uuid: ccfd3acd-1cd3-432e-bc1d-f22d958cac57
 langcode: en
 status: true
 dependencies:
   config:
-    - node.type.step_by_step_homepage
-id: node.step_by_step_homepage.promote
+    - node.type.step_by_step_page
+id: node.step_by_step_page.promote
 field_name: promote
 entity_type: node
-bundle: step_by_step_homepage
+bundle: step_by_step_page
 label: 'Promoted to front page'
 description: ''
 required: false

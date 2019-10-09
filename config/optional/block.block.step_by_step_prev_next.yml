@@ -7,9 +7,9 @@ dependencies:
     - node
     - views
   theme:
-    - croydon
+    - bartik
 id: step_by_step_prev_next
-theme: croydon
+theme: bartik
 region: content
 weight: 100
 provider: null

@@ -3,10 +3,6 @@
  * Style rules for the Step by step navigation and Prev/Next links.
  */
 
- /*
-
- UN-COMMENT TO USE STANDALONE MODULE CSS
- 
 .node--step_by_step_page a:focus, .node--step_by_step_homepage a:focus {
   outline: none !important;
 }
@@ -72,11 +68,6 @@ ul.step-list li .btn {
 }
 .step-by-step-pages .step-by-step-pages__relationship {
   display: block;
-}
-@media screen and (min-width: 768px) {
-  .step-by-step-pages .step-by-step-pages__relationship {
-    display: none;
-  }
 }
 .step-by-step-pages .step-master {
   font-size: 16px;
@@ -182,6 +173,4 @@ ul.step-list li .btn {
 }
 .step-by-step-pages ol.step-list .step .step__summary.step-show-summary {
   display: block;
-}*/
-
-
+}
