@@ -2,10 +2,6 @@
  * @file
  * Style rules for the Step by step navigation and Prev/Next links.
  */
-
-.node--step_by_step_page a:focus, .node--step_by_step_homepage a:focus {
-  outline: none !important;
-}
 .node--step_by_step_page section, .node--step_by_step_homepage section {
   margin-bottom: 0;
   padding-bottom: 1rem;
@@ -118,7 +114,6 @@ ul.step-list li .btn {
   color: #121212;
 }
 .step-by-step-pages ol.step-list .step .step__title {
-  width: 100%;
   margin: 0 0 0 2.5rem;
   cursor: pointer;
   padding: 0.6rem 0 0.8rem 0;

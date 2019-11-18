@@ -9,10 +9,10 @@
   function titlesum(){ 
     $("ol.step-list .step").each(function() {
         if ($(this).hasClass('step--active')) {
-            $(this).find('.step__title').append("<a href='#' class='step-show'>Show less</a>");
+            $(this).find('.step__title').append("<a href='#' class='step-show'>Show less about this step</a>");
             $(this).find('.step__summary').addClass('step-show-summary');
         } else {
-            $(this).find('.step__title').append("<a href='#' class='step-show'>Show more</a>");
+            $(this).find('.step__title').append("<a href='#' class='step-show'>Show more about this step</a>");
         };
      });
     }
@@ -21,9 +21,9 @@
   function stepstext(){
     $("ol.step-list .step").each(function() {
       if ($(".step__summary").is(':visible')) {
-         $(this).find('.step-show').text('Show less');
+         $(this).find('.step-show').text('Show less about this step');
       } else {
-         $(this).find('.step-show').text('Show more');
+         $(this).find('.step-show').text('Show more about this step');
       }
     });
   }
@@ -42,9 +42,9 @@
   $('.step-show').on("click", function (e){
     $(this).parent().siblings(".step__summary").toggleClass("step-show-summary");
     if ($(this).parent().siblings(".step__summary").is(':visible')) {
-      $(this).text('Show less');                
+      $(this).text('Show less about this step');                
     } else {
-      $(this).text('Show more');                
+      $(this).text('Show more about this step');                
     }
     e.preventDefault();
   });
