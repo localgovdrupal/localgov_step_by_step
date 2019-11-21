@@ -57,6 +57,7 @@ ul.step-list li .btn {
 .step-by-step-pages__relationship .step-by-step-pages__homepage a {
   color: #121212;
   text-decoration: underline;
+  font-weight: 700 !important;
 }
 
 .step-by-step-pages {
@@ -67,9 +68,8 @@ ul.step-list li .btn {
 }
 .step-by-step-pages .step-master {
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 400 !important;
   color: #0059A4;
-  text-decoration: underline;
 }
 .step-by-step-pages ol.step-list {
   list-style-type: none;
