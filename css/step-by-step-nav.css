@@ -27,18 +27,13 @@ ul.step-list li .btn {
 }
 
 .step-by-step-pages__relationship {
-  display: none;
   width: 100%;
   padding: 1rem;
   margin-bottom: 2.5rem;
   border-left: 0.3125rem solid #551A8B;
   background: #EDEDED;
 }
-@media screen and (min-width: 768px) {
-  .step-by-step-pages__relationship {
-    display: block;
-  }
-}
+
 .step-by-step-pages__relationship .step-by-step-pages__part-of {
   color: #551A8B;
   font-weight: bold;
