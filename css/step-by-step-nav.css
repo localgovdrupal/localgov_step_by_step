@@ -149,12 +149,7 @@ ul.step-list li .btn {
 }
 .step-by-step-pages ol.step-list .step .step__summary {
   display: none;
-  position: relative;
-  height: calc(100% - 132px);
-  width: calc(100% - 41px);
-  overflow: visible;
-  margin-left: 41px;
-  margin-right: 24px;
+  padding-left: 2.4rem;
   padding-bottom: 15px;
 }
 .step-by-step-pages ol.step-list .step .step__summary a {
