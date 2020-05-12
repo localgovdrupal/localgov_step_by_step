@@ -136,7 +136,7 @@ function _gull_step_by_step_find_prev_next_steps(string $current_nid, array &$va
   $variables['next_step_index'] = $next_step_index;
 
   $is_first_step = ($next_step_index === 1);
-  $variables['next_step_link_text'] = $is_first_step ? t('Start') : t('Next Step');
+  $variables['next_step_link_text'] = $is_first_step ? t('Next Step') : t('Next Step');
 }
 
 /**
