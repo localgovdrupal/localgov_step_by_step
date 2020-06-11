@@ -29,13 +29,6 @@ Our implementation provides a *Step by step homepage* content type that refers t
 - Add a few Step by step pages.  In each of the page, use the "Step by step homepage" autocomplete field to refer to the relevant Step by step homepage.
 - To reorder the Step by step pages, edit the related Step by step homepage and drag the Step by step pages.
 
-## Configuration update
-Use the [Features](https://www.drupal.org/project/features) module to *reimport* Drupal configurations carried by this
-module:
-```
-$ drush features:import gull_step_by_step
-```
-
 ## Limitations
 Unlike the gov.uk Step by step prototype, we do not provide pages for substeps.
 
