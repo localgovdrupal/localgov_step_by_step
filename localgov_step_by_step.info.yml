@@ -1,5 +1,8 @@
 name: Step by step
 type: module
 description: Provides the Step-by-step page.
-package: Gull
-core: 8.x
+core_version_requirement: ^8.8 || ^9
+package: LocalGovDrupal
+
+dependencies:
+  - localgov_core:localgov_core

@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the LocalGov Step By Step module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function localgov_step_by_step_install() {
+  $services = \Drupal::moduleHandler()->moduleExists('localgov_services_navigation');
+  $topics = \Drupal::moduleHandler()->moduleExists('localgov_topics');
+  localgov_step_by_step_optional_fields_settings($services, $topics);
+}

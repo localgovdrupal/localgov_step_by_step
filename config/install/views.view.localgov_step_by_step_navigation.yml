@@ -5,7 +5,7 @@ dependencies:
     - field.storage.node.localgov_step_parent
     - field.storage.node.localgov_step_section_title
     - field.storage.node.localgov_step_summary
-    - node.type.localgov_step_by_step_homepage
+    - node.type.localgov_step_by_step_overview
     - node.type.localgov_step_by_step_page
   module:
     - node
@@ -352,7 +352,7 @@ display:
           field: localgov_step_by_step_pages
           relationship: none
           group_type: group
-          admin_label: 'Step by step pages referenced from Step by step homepages'
+          admin_label: 'Step by step pages referenced from Step by step overviews'
           required: false
           plugin_id: standard
         reverse__node__localgov_step_by_step_pages:
@@ -361,7 +361,7 @@ display:
           field: reverse__node__localgov_step_by_step_pages
           relationship: localgov_step_by_step_pages
           group_type: group
-          admin_label: 'Step by step homepages'
+          admin_label: 'Step by step overviews'
           required: false
           entity_type: node
           plugin_id: entity_reverse
@@ -371,7 +371,7 @@ display:
           field: localgov_step_by_step_pages
           relationship: reverse__node__localgov_step_by_step_pages
           group_type: group
-          admin_label: 'Step by step pages referenced from Step by step homepages'
+          admin_label: 'Step by step pages referenced from Step by step overviews'
           required: true
           plugin_id: standard
       arguments:
@@ -416,7 +416,7 @@ display:
           entity_type: node
           entity_field: nid
           plugin_id: node_nid
-      display_comment: "Lists Step by step pages belonging to a Step by step *homepage*.  This homepage is derived either from the current page or from the currently displayed Step by step page.\r\n\r\nThe blocks from the \"Navigation block\" and \"Prev/Next step\" displays are meant to be used in Step by step pages only.  The \"Homepage navigation block\" is meant to be used in Step by step homepages.\r\n\r\nWe use a custom theme template for the \"Prev/Next step\" display.  Custom theme template variables are inserted from a template preprocess function.  This function is dependent on the content ID field whose column name is node_field_data_node__localgov_step_by_step_pages_1_nid at present.\r\n@see localgov_step_by_step_preprocess_views_view_list()\r\n@see modules/custom/localgov_step_by_step/views-view-list--step-by-step-navigation--prev-next.html.twig"
+      display_comment: "Lists Step by step pages belonging to a Step by step *overview*.  This overview is derived either from the current page or from the currently displayed Step by step page.\r\n\r\nThe blocks from the \"Navigation block\" and \"Prev/Next step\" displays are meant to be used in Step by step pages only.  The \"Overview navigation block\" is meant to be used in Step by step overviews.\r\n\r\nWe use a custom theme template for the \"Prev/Next step\" display.  Custom theme template variables are inserted from a template preprocess function.  This function is dependent on the content ID field whose column name is node_field_data_node__localgov_step_by_step_pages_1_nid at present.\r\n@see localgov_step_by_step_preprocess_views_view_list()\r\n@see modules/custom/localgov_step_by_step/views-view-list--step-by-step-navigation--prev-next.html.twig"
       css_class: step-by-step-pages
       filter_groups:
         operator: AND
@@ -491,10 +491,10 @@ display:
           field: area_text_custom
           relationship: none
           group_type: group
-          admin_label: 'Pointer to Step by step homepage'
+          admin_label: 'Pointer to Step by step overview'
           empty: false
           tokenize: true
-          content: "<div  class=\"step-by-step-pages__relationship\">\r\n  <span class=\"step-by-step-pages__part-of\">Part of </span><br/>\r\n  <span class=\"step-by-step-pages__homepage\">{{ localgov_step_parent }}</span>\r\n</div>"
+          content: "<div  class=\"step-by-step-pages__relationship\">\r\n  <span class=\"step-by-step-pages__part-of\">Part of </span><br/>\r\n  <span class=\"step-by-step-pages__overview\">{{ localgov_step_parent }}</span>\r\n</div>"
           plugin_id: text_custom
       defaults:
         header: false
@@ -514,10 +514,10 @@ display:
         - 'config:field.storage.node.localgov_step_parent'
         - 'config:field.storage.node.localgov_step_section_title'
         - 'config:field.storage.node.localgov_step_summary'
-  steps_for_homepage:
+  steps_for_overview:
     display_plugin: block
-    id: steps_for_homepage
-    display_title: 'Homepage navigation block'
+    id: steps_for_overview
+    display_title: 'Overview navigation block'
     position: 3
     display_options:
       arguments:
@@ -527,7 +527,7 @@ display:
           field: nid
           relationship: none
           group_type: group
-          admin_label: 'Step by step homepage node ID'
+          admin_label: 'Step by step overview node ID'
           default_action: default
           exception:
             value: all
@@ -553,7 +553,7 @@ display:
             fail: 'access denied'
           validate_options:
             bundles:
-              localgov_step_by_step_homepage: localgov_step_by_step_homepage
+              localgov_step_by_step_overview: localgov_step_by_step_overview
             operation: view
             multiple: 0
             access: false
@@ -573,12 +573,12 @@ display:
           field: localgov_step_by_step_pages
           relationship: none
           group_type: group
-          admin_label: 'Step by step pages referenced from Step by step homepages'
+          admin_label: 'Step by step pages referenced from Step by step overviews'
           required: true
           plugin_id: standard
       css_class: 'step-by-step-pages step-by-step-pages--nav'
-      display_description: 'List Step by step pages belonging to a Step by step homepage.'
-      block_description: 'Step by step navigation for Step homepage'
+      display_description: 'List Step by step pages belonging to a Step by step overview.'
+      block_description: 'Step by step navigation for Step overview'
     cache_metadata:
       max-age: -1
       contexts:

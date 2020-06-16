@@ -2,11 +2,11 @@ langcode: en
 status: true
 dependencies:
   config:
-    - node.type.localgov_step_by_step_homepage
-id: node.localgov_step_by_step_homepage.promote
+    - node.type.localgov_step_by_step_overview
+id: node.localgov_step_by_step_overview.promote
 field_name: promote
 entity_type: node
-bundle: localgov_step_by_step_homepage
+bundle: localgov_step_by_step_overview
 label: 'Promoted to front page'
 description: ''
 required: false

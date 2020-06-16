@@ -3,11 +3,11 @@ status: true
 dependencies:
   config:
     - field.storage.node.localgov_step_description
-    - node.type.localgov_step_by_step_homepage
-id: node.localgov_step_by_step_homepage.localgov_step_description
+    - node.type.localgov_step_by_step_overview
+id: node.localgov_step_by_step_overview.localgov_step_description
 field_name: localgov_step_description
 entity_type: node
-bundle: localgov_step_by_step_homepage
+bundle: localgov_step_by_step_overview
 label: 'Step by step description'
 description: ''
 required: false

@@ -3,15 +3,15 @@ status: true
 dependencies:
   module:
     - node
-id: localgov_step_by_step_homepage
-label: 'Step by step homepage'
+id: localgov_step_by_step_overview
+label: 'Step by step overview'
 type: 'canonical_entities:node'
 pattern: 'step-by-step/[node:title]'
 selection_criteria:
   b7733dd9-c007-410f-94cb-896af2a94006:
     id: node_type
     bundles:
-      localgov_step_by_step_homepage: localgov_step_by_step_homepage
+      localgov_step_by_step_overview: localgov_step_by_step_overview
     negate: false
     context_mapping:
       node: node

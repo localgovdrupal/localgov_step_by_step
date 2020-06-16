@@ -68,7 +68,7 @@ class StepByStepPagesTest extends BrowserTestBase {
    */
   public function testConfigForm() {
     $this->drupalLogin($this->adminUser);
-    $this->drupalGet('/admin/structure/types/manage/localgov_step_by_step_homepage/fields');
+    $this->drupalGet('/admin/structure/types/manage/localgov_step_by_step_overview/fields');
     $this->assertSession()->pageTextContains('localgov_step_description');
     $this->assertSession()->pageTextContains('localgov_step_by_step_pages');
 

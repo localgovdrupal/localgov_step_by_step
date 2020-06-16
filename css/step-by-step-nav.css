@@ -2,11 +2,11 @@
  * @file
  * Style rules for the Step by step navigation and Prev/Next links.
  */
-.node--step_by_step_page section, .node--step_by_step_homepage section {
+.node--step_by_step_page section, .node--step_by_step_overview section {
   margin-bottom: 0;
   padding-bottom: 1rem;
 }
-.node--step_by_step_page .key-under, .node--step_by_step_homepage .key-under {
+.node--step_by_step_page .key-under, .node--step_by_step_overview .key-under {
   margin-bottom: 1.4rem;
 }
 
@@ -39,17 +39,17 @@ ul.step-list li .btn {
   font-weight: bold;
   font-size: 19px;
 }
-.step-by-step-pages__relationship .step-by-step-pages__homepage {
+.step-by-step-pages__relationship .step-by-step-pages__overview {
   color: #121212;
   font-size: 19px;
   font-weight: bold;
 }
 @media screen and (min-width: 768px) {
-  .step-by-step-pages__relationship .step-by-step-pages__homepage {
+  .step-by-step-pages__relationship .step-by-step-pages__overview {
     font-size: 22px;
   }
 }
-.step-by-step-pages__relationship .step-by-step-pages__homepage a {
+.step-by-step-pages__relationship .step-by-step-pages__overview a {
   color: #121212;
   text-decoration: underline;
   font-weight: 700 !important;

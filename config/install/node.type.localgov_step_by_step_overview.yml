@@ -7,8 +7,8 @@ third_party_settings:
   menu_ui:
     available_menus: {  }
     parent: ''
-name: 'Step by step homepage'
-type: localgov_step_by_step_homepage
+name: 'Step by step overview'
+type: localgov_step_by_step_overview
 description: ''
 help: ''
 new_revision: true
