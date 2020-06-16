@@ -21,7 +21,7 @@ use Drupal\Core\Entity\EntityInterface;
 function localgov_step_by_step_theme() {
 
   return [
-    'views_view_list__step_by_step_navigation__prev_next' => [
+    'views_view_list__localgov_step_by_step_navigation__prev_next' => [
       'base hook' => 'views_view_list',
     ],
   ];
@@ -45,7 +45,7 @@ function localgov_step_by_step_node_insert(EntityInterface $entity) {
  */
 function localgov_step_by_step_node_update(EntityInterface $entity) {
 
-  $is_not_step_by_step_page_node = ($entity->bundle() !== 'step_by_step_page');
+  $is_not_step_by_step_page_node = ($entity->bundle() !== 'localgov_step_by_step_page');
   if ($is_not_step_by_step_page_node) {
     return;
   }
@@ -53,20 +53,20 @@ function localgov_step_by_step_node_update(EntityInterface $entity) {
   $step_by_step_page_node = $entity;
   $step_by_step_page_nid = $step_by_step_page_node->id();
 
-  $step_by_step_overview_node = $step_by_step_page_node->field_guide_parent->entity ?? FALSE;
+  $step_by_step_overview_node = $step_by_step_page_node->localgov_step_parent->entity ?? FALSE;
   if (empty($step_by_step_overview_node)) {
     return;
   }
 
   try {
-    $has_ref_to_this_step_by_step_page = array_filter($step_by_step_overview_node->field_guide_pages->referencedEntities(), function (EntityInterface $page_node) use ($step_by_step_page_nid): bool {
+    $has_ref_to_this_step_by_step_page = array_filter($step_by_step_overview_node->localgov_step_by_step_pages->referencedEntities(), function (EntityInterface $page_node) use ($step_by_step_page_nid): bool {
       return $page_node->id() === $step_by_step_page_nid;
     });
     if ($has_ref_to_this_step_by_step_page) {
       return;
     }
 
-    $step_by_step_overview_node->field_guide_pages->appendItem($step_by_step_page_nid);
+    $step_by_step_overview_node->localgov_step_by_step_pages->appendItem($step_by_step_page_nid);
     $step_by_step_overview_node->save();
   }
   catch (Exception $e) {
@@ -85,7 +85,7 @@ function localgov_step_by_step_preprocess_views_view_list(array &$variables) {
   $view_id         = $view->id();
   $view_display_id = $view->current_display;
 
-  $is_step_by_step_nav             = ($view_id === 'step_by_step_navigation');
+  $is_step_by_step_nav             = ($view_id === 'localgov_step_by_step_navigation');
   $is_step_by_step_nav_block       = ($view_display_id === 'steps');
   $is_step_by_step_prev_next_block = ($view_display_id === 'prev_next');
 
@@ -117,7 +117,7 @@ function _localgov_step_by_step_find_prev_next_steps(string $current_nid, array 
   $next_step_index = -1;
 
   foreach ($variables['rows'] as $key => $row) {
-    $row_nid = $row['content']['#row']->node_field_data_node__field_guide_pages_1_nid ?? '-1';
+    $row_nid = $row['content']['#row']->node_field_data_node__localgov_step_by_step_pages_1_nid ?? '-1';
     $is_current_step = ($row_nid === $current_nid);
 
     if ($is_current_step) {
@@ -130,8 +130,8 @@ function _localgov_step_by_step_find_prev_next_steps(string $current_nid, array 
 
   $variables['has_prev_step'] = array_key_exists($prev_step_index, $variables['rows']);
   $variables['has_next_step'] = array_key_exists($next_step_index, $variables['rows']);
-  $variables['prev_step_nid'] = $variables['rows'][$prev_step_index]['content']['#row']->node_field_data_node__field_guide_pages_1_nid ?? -1;
-  $variables['next_step_nid'] = $variables['rows'][$next_step_index]['content']['#row']->node_field_data_node__field_guide_pages_1_nid ?? -1;
+  $variables['prev_step_nid'] = $variables['rows'][$prev_step_index]['content']['#row']->node_field_data_node__localgov_step_by_step_pages_1_nid ?? -1;
+  $variables['next_step_nid'] = $variables['rows'][$next_step_index]['content']['#row']->node_field_data_node__localgov_step_by_step_pages_1_nid ?? -1;
   $variables['prev_step_link_text'] = t('Previous Step');
   $variables['prev_step_index'] = $prev_step_index;
   $variables['next_step_index'] = $next_step_index;
@@ -146,7 +146,7 @@ function _localgov_step_by_step_find_prev_next_steps(string $current_nid, array 
 function _localgov_step_by_step_mark_current_step(string $current_nid, array &$variables): void {
 
   foreach ($variables['rows'] as &$row) {
-    $row_nid = $row['content']['#row']->node_field_data_node__field_guide_pages_1_nid ?? '-1';
+    $row_nid = $row['content']['#row']->node_field_data_node__localgov_step_by_step_pages_1_nid ?? '-1';
 
     $is_current_step = ($row_nid === $current_nid);
     if ($is_current_step) {
