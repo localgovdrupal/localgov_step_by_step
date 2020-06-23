@@ -16,10 +16,10 @@ Our implementation provides a *Step by step overview* content type that refers t
 
 ## Install process
 - Standard Drupal module installation process applies.  But...
-- The 3 x block configuration files are only installed if you are using the Bartik theme which is unlikely.  So *before* installing this module, open these three files and replace "bartik" with your theme name:
-  - config/optional/block.block.step_by_step_navigation.yml
-  - config/optional/block.block.step_by_step_navigation_block_for_overview.yml
-  - config/optional/block.block.step_by_step_prev_next.yml
+- The 3 x block configuration files are only installed if you are using the LocalGov Drupal base theme.  So *before* installing this module, open these three files and replace "localgov_theme" with your theme name:
+  - config/optional/block.block.localgov_step_by_step_navigation.yml
+  - config/optional/block.block.localgov_step_by_step_navigation_block_for_overview.yml
+  - config/optional/block.block.localgov_step_by_step_prev_next.yml
 
   You can revert these changes after module installation as these files are no longer needed.
 - Alternatively, add these three blocks from the Drupal block layout admin page.  The Prev/Next block should be placed after the "Main page content" block.  The other two Step by step navigation blocks can be placed in the second sidebar or after the "Main page content" block based on your preferences.
