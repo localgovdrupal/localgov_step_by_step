@@ -1,8 +1,11 @@
-name: Step by step
+name: LocalGovDrupal Step by step
 type: module
-description: Provides the Step-by-step page.
+description: Provides the Step by step page.
 core_version_requirement: ^8.8 || ^9
 package: LocalGovDrupal
 
 dependencies:
+  - drupal:menu_ui
+  - drupal:path
+  - drupal:views
   - localgov_core:localgov_core
