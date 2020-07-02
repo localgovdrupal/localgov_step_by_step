@@ -12,4 +12,14 @@ function localgov_step_by_step_install() {
   $services = \Drupal::moduleHandler()->moduleExists('localgov_services_navigation');
   $topics = \Drupal::moduleHandler()->moduleExists('localgov_topics');
   localgov_step_by_step_optional_fields_settings($services, $topics);
+  // Check if simple_sitemap module is installed.
+  $simple_sitemap = \Drupal::moduleHandler()->moduleExists('simple_sitemap');
+  if ($simple_sitemap) {
+    // Install default config, as this does not appear to work in the
+    // config/optional folder.
+    // Discussed on https://www.drupal.org/project/simple_sitemap/issues/3156080
+    $generator = \Drupal::service('simple_sitemap.generator');
+    $generator->setBundleSettings('node', 'localgov_step_by_step_overview', ['index' => TRUE, 'priority' => 0.5]);
+    $generator->setBundleSettings('node', 'localgov_step_by_step_page', ['index' => TRUE, 'priority' => 0.5]);
+  }
 }
