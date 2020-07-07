@@ -1,12 +1,7 @@
 langcode: en
 status: true
-dependencies:
-  module:
-    - menu_ui
-third_party_settings:
-  menu_ui:
-    available_menus: {  }
-    parent: ''
+dependencies: { }
+third_party_settings: { }
 name: 'Step by step overview'
 type: localgov_step_by_step_overview
 description: ''

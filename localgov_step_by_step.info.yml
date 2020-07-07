@@ -5,7 +5,6 @@ core_version_requirement: ^8.8 || ^9
 package: LocalGovDrupal
 
 dependencies:
-  - drupal:menu_ui
   - drupal:path
   - drupal:views
   - localgov_core:localgov_core
