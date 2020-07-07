@@ -10,7 +10,7 @@ dependencies:
     - localgov_theme
 id: localgov_step_by_step_navigation_block_for_overview
 theme: localgov_theme
-region: sidebar_second
+region: content_bottom
 weight: 200
 provider: null
 plugin: 'views_block:localgov_step_by_step_navigation-steps_for_overview'

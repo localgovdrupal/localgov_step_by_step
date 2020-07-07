@@ -21,6 +21,13 @@ use Drupal\Core\Entity\EntityInterface;
 function localgov_step_by_step_theme() {
 
   return [
+    'step_by_step_part_of_block' => [
+      'variables' => [
+        'label' => NULL,
+        'url' => NULL,
+      ],
+      'render element' => 'children',
+    ],
     'views_view_list__localgov_step_by_step_navigation__prev_next' => [
       'base hook' => 'views_view_list',
     ],
