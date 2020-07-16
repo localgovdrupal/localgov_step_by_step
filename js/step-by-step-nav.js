@@ -11,10 +11,7 @@
   stepByStep.showStepText = 'Show step summary';
   stepByStep.hideStepText = 'Hide step summary';
 
-  // Add hide/show buttons for each step, accounting for active step if present. Active step is shown open by default
-
-  // Add hide/show button for all steps, default is 'Show all' for overview and all step pages, as per GDS
-
+  // Set visibility based on specified button.step-show elements
   function summaryVisiblity(elements, cmd) {
     switch(cmd) {
       case 'show':
@@ -25,7 +22,7 @@
           $(this).attr("aria-expanded", "true");
           $(this).attr('aria-label', "Hide " + stepTitle + " summary");
         });
-        // Hide all control visible if all steps are shown
+        // 'Hide all' control displayed if all steps are shown
         if ($('.step__summary').length === $('.step-show-summary').length) {
           $('.step-master').text(stepByStep.hideAllText);
           $('.summaries-control i').addClass('fa-eye-slash').removeClass('fa-eye');
@@ -39,7 +36,7 @@
           $(this).text(stepByStep.showStepText);
           $(this).attr('aria-label', "Show " + stepTitle + " summary");
         });
-        // Show all control visible if any steps are hidden
+        // 'Show all' control displayed if any steps are hidden
         $('.step-master').text(stepByStep.showAllText);
         $('.summaries-control i').addClass('fa-eye').removeClass('fa-eye-slash');
         break;
