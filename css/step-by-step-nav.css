@@ -58,10 +58,29 @@ ul.step-list li .btn {
 .step-by-step-pages .step-by-step-pages__relationship {
   display: block;
 }
-.step-by-step-pages .step-master {
-  font-size: 16px;
-  font-weight: 400 !important;
+.step-by-step-pages .step-master,
+.step-by-step-pages ol.step-list .step .step__title .step-show {
+  background: none;
+  border: none;
   color: #0059A4;
+  font-size: 16px;
+  font-weight: 400;
+  text-decoration: underline;
+}
+.step-by-step-pages ol.step-list .step .step__title .step-show {
+  font-size: .875rem;
+  color: #121212;
+}
+.step-by-step-pages .step-master:focus,
+.step-by-step-pages .step-master:hover,
+.step-by-step-pages .step-master:active,
+.step-by-step-pages ol.step-list .step .step__title .step-show:focus,
+.step-by-step-pages ol.step-list .step .step__title .step-show:hover,
+.step-by-step-pages ol.step-list .step .step__title .step-show:active {
+  background-color: #fb0;
+  color: #121212;
+  text-decoration: none;
+  box-shadow: 0 0 0 0.125rem #fb0;
 }
 .step-by-step-pages ol.step-list {
   list-style-type: none;
@@ -117,11 +136,6 @@ ul.step-list li .btn {
 .step-by-step-pages ol.step-list .step .step__title a {
   color: #121212;
   display: block;
-}
-.step-by-step-pages ol.step-list .step .step__title a.step-show {
-  font-size: 14px;
-  color: #0059A4;
-  text-decoration: underline;
 }
 .step-by-step-pages ol.step-list .step .step__summary p {
   margin-top: 0;
