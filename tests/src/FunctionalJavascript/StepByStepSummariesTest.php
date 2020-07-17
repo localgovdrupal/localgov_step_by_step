@@ -30,7 +30,7 @@ class StepByStepSummariesTest extends WebDriverTestBase {
   ];
 
   /**
-   * Test step summary visibility
+   * Test step summary visibility.
    */
   public function testStepSummaryVisibility() {
 
@@ -43,7 +43,7 @@ class StepByStepSummariesTest extends WebDriverTestBase {
     ]);
 
     // Create three step-by-step page nodes.
-    $pages = array();
+    $pages = [];
     for ($x = 1; $x < 4; $x++) {
       $pages[$x] = $this->createNode([
         'title' => 'Step ' . $x . ' page',
@@ -58,7 +58,7 @@ class StepByStepSummariesTest extends WebDriverTestBase {
     // Load overview page.
     $this->drupalGet('/node/1');
 
-    //Check summaries not visible.
+    // Check summaries not visible.
     $this->assertSession()->pageTextNotContains('Step 1 summary');
 
     $page = $this->getSession()->getPage();
