@@ -43,9 +43,8 @@ class StepByStepSummariesTest extends WebDriverTestBase {
     ]);
 
     // Create three step-by-step page nodes.
-    $pages = [];
     for ($x = 1; $x < 4; $x++) {
-      $pages[$x] = $this->createNode([
+      $this->createNode([
         'title' => 'Step ' . $x . ' page',
         'localgov_step_section_title' => 'Step ' . $x . ' title',
         'type' => 'localgov_step_by_step_page',
