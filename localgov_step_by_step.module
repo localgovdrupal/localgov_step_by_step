@@ -148,10 +148,10 @@ function _localgov_step_by_step_find_prev_next_steps(string $current_nid, array 
 
   $node_storage = \Drupal::entityTypeManager()->getStorage('node');
   if ($variables['has_next_step']) {
-    $variables['next_step_title'] = $node = $node_storage->load($variables['next_step_nid'])->title->value;
+    $variables['next_step_title'] = $node_storage->load($variables['next_step_nid'])->title->value;
   }
   if ($variables['has_prev_step']) {
-    $variables['prev_step_title'] = $node = $node_storage->load($variables['prev_step_nid'])->title->value;
+    $variables['prev_step_title'] = $node_storage->load($variables['prev_step_nid'])->title->value;
   }
 }
 
