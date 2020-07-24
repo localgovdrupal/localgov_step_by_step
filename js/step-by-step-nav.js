@@ -4,74 +4,89 @@
  */
 
 (function($, Drupal, drupalSettings) {
-  
-  // add initial step view links based on active step status
-  function titlesum(){ 
-    $("ol.step-list .step").each(function() {
-        if ($(this).hasClass('step--active')) {
-            $(this).find('.step__title').append("<span class='step-summary-container'><a href='#' class='step-show'>Hide step summary</a></span>");
-            $(this).find('.step__summary').addClass('step-show-summary');
-        } else {
-            $(this).find('.step__title').append("<span class='step-summary-container'><a href='#' class='step-show'>Show step summary</a></span>");
-        };
-     });
-    }
 
-  // switch text in and out (more precise that toggling)
-  function stepstext(){
-    $("ol.step-list .step").each(function() {
-      if ($(".step__summary").is(':visible')) {
-         $(this).find('.step-show').text('Hide step summary');
-      } else {
-         $(this).find('.step-show').text('Show step summary');
-      }
-    });
-  }
+  const stepByStep = {};
+  stepByStep.showAllText = 'Show summaries';
+  stepByStep.hideAllText = 'Hide summaries';
+  stepByStep.showStepText = 'Show step summary';
+  stepByStep.hideStepText = 'Hide step summary';
 
-  // run titlesum function on load
-  titlesum();
+  // Set visibility based on specified button.step-show elements.
+  function summaryVisiblity(elements, cmd) {
+    switch(cmd) {
+      case 'show':
+        elements.each(function() {
+          var stepTitle = $(this).parents('.step__title').find('a').text();
+          $(this).parents('.step').find('.step__summary').addClass('step-show-summary');
+          $(this).text(stepByStep.hideStepText);
+          $(this).attr("aria-expanded", "true");
+          $(this).attr('aria-label', "Hide " + stepTitle + " summary");
+        });
+        // 'Hide all' control displayed if all steps are shown.
+        if ($('.step__summary').length === $('.step-show-summary').length) {
+          $('.step-master').text(stepByStep.hideAllText);
+          $('.summaries-control i').addClass('fa-eye-slash').removeClass('fa-eye');
+        }
+        break;
 
-  // add the hide all option on load
-  if ($(".step__summary").is(':visible')) {
-  $("<div class='summaries-control'><i class='fas fa-eye-slash'></i><a href='#' class='step-master ml-2'>Hide summaries</a></div>").insertBefore("ol.step-list");
-  } else {
-    $("<div class='summaries-control'><i class='fas fa-eye'></i><a href='#' class='step-master ml-2'>Show summaries</a></div>").insertBefore("ol.step-list");
-  };
-
-  // handle show hide of summaries
-  $('.step-show').on("click", function (e){
-    $(this).parent().parent().siblings(".step__summary").toggleClass("step-show-summary");
-    if ($(this).parent().parent().siblings(".step__summary").is(':visible')) {
-      $(this).text('Hide step summary');                
-    } else {
-      $(this).text('Show step summary');                
-    }
-    e.preventDefault();
-  });
-
-  // handle hide show of all summaries
-  $('.step-master').on("click", function (e){
-   if ($(".step__summary").is(':visible')) {
-    $(".step__summary").removeClass("step-show-summary");
-      $(this).text('Show summaries');
-      $(this).prev().addClass('fa-eye').removeClass('fa-eye-slash');         
-    } else {
-      $(".step__summary").addClass("step-show-summary");
-      $(this).text('Hide summaries'); 
-      $(this).prev().addClass('fa-eye-slash').removeClass('fa-eye');          
-    }
-    
-    stepstext(); // update the steps text
-    e.preventDefault();
-  });
-  
-
-  Drupal.behaviors.localgov_step_by_step = {
-    attach: function onload(context, settings) {
-      // Custom code goes here.  Please note that this function can get called
-      // more than once after page load.
-      
-
+      case 'hide':
+        elements.each(function() {
+          var stepTitle = $(this).parents('.step__title').find('a').text();
+          $(this).parents('.step').find('.step__summary').removeClass('step-show-summary');
+          $(this).attr("aria-expanded", "false");
+          $(this).text(stepByStep.showStepText);
+          $(this).attr('aria-label', "Show " + stepTitle + " summary");
+        });
+        // 'Show all' control displayed if any steps are hidden.
+        $('.step-master').text(stepByStep.showAllText);
+        $('.summaries-control i').addClass('fa-eye').removeClass('fa-eye-slash');
+        break;
     }
   }
+
+  // Insert show all button.
+  $("<div class='summaries-control'><i class='fas fa-eye'></i><button aria-expanded='false' class='step-master ml-2'>" + stepByStep.showAllText + "</button></div>").insertBefore("ol.step-list");
+
+  // Insert hide/show button for each step.
+  function stepSummaryButton(isVisible, stepTitle) {
+    var $container = $("<span class='step-summary-container'>");
+    var $button = $("<button class='step-show'>");
+    $button.attr('aria-expanded', isVisible ? "true" : "false");
+    $button.attr('aria-label', (isVisible ? "Hide " : "Show ") + stepTitle + " summary");
+    $button.text(isVisible ? stepByStep.hideStepText : stepByStep.showStepText);
+    $container.append($button);
+    return $container;
+  }
+
+  $("ol.step-list .step").each(function() {
+    var isVisible = $(this).hasClass('step--active');
+    var stepTitle = $(this).find('.step__title').text();
+    if (isVisible) {
+      $(this).find('.step__summary').addClass('step-show-summary');
+    }
+    $(this).find('.step__title').append(stepSummaryButton(isVisible, stepTitle));
+  });
+
+  // Show / hide all.
+  $('.step-master').on("click", function () {
+    $('.summaries-control i').toggleClass('fa-eye fa-eye-slash');
+    if ($(this).text() === stepByStep.showAllText) {
+      $(this).text(stepByStep.hideAllText).attr('aria-expanded', true);
+      summaryVisiblity($('.step-show'), 'show');
+    } else {
+      $(this).text(stepByStep.showAllText).attr('aria-expanded', false);
+      summaryVisiblity($('.step-show'), 'hide');
+    }
+  });
+
+  // Show / hide single step.
+  $('.step-show').on("click", function () {
+    $(this).parents('.step').find('.step__summary').toggleClass('step-show-summary');
+    if ($(this).text() === stepByStep.showStepText) {
+      summaryVisiblity($(this), 'show');
+    } else {
+      summaryVisiblity($(this), 'hide');
+    }
+  });
+
 })(jQuery, Drupal, drupalSettings);
