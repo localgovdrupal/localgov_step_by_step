@@ -4,7 +4,7 @@ dependencies: { }
 third_party_settings: { }
 name: 'Step by step page'
 type: localgov_step_by_step_page
-description: ''
+description: 'Step page associated with a step by step overview page.'
 help: ''
 new_revision: true
 preview_mode: 1
