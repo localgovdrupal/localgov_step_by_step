@@ -42,9 +42,10 @@ class StepByStepSummariesTest extends WebDriverTestBase {
       'status' => NodeInterface::PUBLISHED,
     ]);
 
+    $step_pages = [];
     // Create three step-by-step page nodes.
     for ($x = 1; $x < 4; $x++) {
-      $this->createNode([
+      $step_pages[$x] = $this->createNode([
         'title' => 'Step ' . $x . ' page',
         'localgov_step_section_title' => 'Step ' . $x . ' title',
         'type' => 'localgov_step_by_step_page',
@@ -79,6 +80,25 @@ class StepByStepSummariesTest extends WebDriverTestBase {
     $this->assertSession()->pageTextNotContains('Step 1 summary');
     $this->assertSession()->pageTextNotContains('Step 3 summary');
     $this->assertSession()->pageTextContains('Step 2 summary');
+
+    // Unpublish step 2.
+    $step_pages[2]->status = NodeInterface::NOT_PUBLISHED;
+    $step_pages[2]->save();
+    $this->drupalGet('/node/1');
+    // Test 'Show summaries' button.
+    $page->pressButton('Show summaries');
+    $this->assertSession()->pageTextContains('Step 1 summary');
+    $this->assertSession()->pageTextNotContains('Step 2 summary');
+    $this->assertSession()->pageTextContains('Step 3 summary');
+
+    // Delete step 3.
+    $step_pages[3]->delete();
+    $this->drupalGet('/node/1');
+    // Test 'Show summaries' button.
+    $page->pressButton('Show summaries');
+    $this->assertSession()->pageTextContains('Step 1 summary');
+    $this->assertSession()->pageTextNotContains('Step 2 summary');
+    $this->assertSession()->pageTextNotContains('Step 3 summary');
   }
 
 }
