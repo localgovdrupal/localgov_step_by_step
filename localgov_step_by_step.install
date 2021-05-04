@@ -1,6 +1,7 @@
 <?php
 
 use Drupal\Component\Serialization\Yaml;
+use Drupal\views\Entity\View;
 
 /**
  * @file
@@ -30,8 +31,7 @@ function localgov_step_by_step_install() {
  * Update navigation view for step published status.
  */
 function localgov_step_by_step_update_8001() {
-  $config_factory = \Drupal::configFactory();
-  $navigation_view = $config_factory->getEditable('views.view.localgov_step_by_step_navigation');
+  $navigation_view = View::load('localgov_step_by_step_navigation');
   $display = $navigation_view->get('display');
   $filters = $display['default']['display_options']['filters'];
   $relationships = $display['default']['display_options']['relationships'];
