@@ -11,8 +11,6 @@ dependencies:
     - node
     - text
     - user
-_core:
-  default_config_hash: uLJVkWkbzJp38WespuE3bjVEmfr34-HPF37RRnuDjng
 id: localgov_step_by_step_navigation
 label: 'Step by step navigation'
 module: views
@@ -20,7 +18,6 @@ description: ''
 tag: ''
 base_table: node_field_data
 base_field: nid
-core: 8.x
 display:
   default:
     display_plugin: default
@@ -329,17 +326,45 @@ display:
           field_api_classes: false
           plugin_id: field
       filters:
-        status:
-          value: '1'
+        status_extra:
+          id: status_extra
           table: node_field_data
-          field: status
-          plugin_id: boolean
-          entity_type: node
-          entity_field: status
-          id: status
-          expose:
-            operator: ''
+          field: status_extra
+          relationship: localgov_step_by_step_pages_1
+          group_type: group
+          admin_label: ''
+          operator: '='
+          value: false
           group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          entity_type: node
+          plugin_id: node_status
       sorts: {  }
       title: 'Step by step navigation'
       header: {  }
@@ -422,12 +447,14 @@ display:
         operator: AND
         groups:
           1: AND
+      display_extenders: {  }
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
+        - user
         - 'user.node_grants:view'
         - user.permissions
       tags:
@@ -464,12 +491,14 @@ display:
           inline: {  }
           separator: ''
           hide_empty: false
+      display_extenders: {  }
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
+        - user
         - 'user.node_grants:view'
         - user.permissions
       tags:
@@ -502,12 +531,14 @@ display:
         row: true
         css_class: false
       css_class: 'step-by-step-pages step-by-step-pages--nav'
+      display_extenders: {  }
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
+        - user
         - 'user.node_grants:view'
         - user.permissions
       tags:
@@ -579,15 +610,17 @@ display:
       css_class: 'step-by-step-pages step-by-step-pages--nav'
       display_description: 'List Step by step pages belonging to a Step by step overview.'
       block_description: 'Step by step navigation for Step overview'
+      display_extenders: {  }
     cache_metadata:
       max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
+        - user
         - 'user.node_grants:view'
         - user.permissions
       tags:
-        - 'config:field.storage.node.localgov_step_by_step_parent'
-        - 'config:field.storage.node.localgov_step_by_step_section_title'
-        - 'config:field.storage.node.localgov_step_by_step_summary'
+        - 'config:field.storage.node.localgov_step_parent'
+        - 'config:field.storage.node.localgov_step_section_title'
+        - 'config:field.storage.node.localgov_step_summary'
