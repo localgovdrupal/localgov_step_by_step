@@ -1,12 +1,12 @@
 <?php
 
-use Drupal\Component\Serialization\Yaml;
-use Drupal\views\Entity\View;
-
 /**
  * @file
  * Install, update and uninstall functions for the LocalGov Step By Step module.
  */
+
+use Drupal\Component\Serialization\Yaml;
+use Drupal\views\Entity\View;
 
 /**
  * Implements hook_install().
