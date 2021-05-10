@@ -46,7 +46,7 @@ class PagesIntegrationTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'localgov_core',
     'localgov_services_landing',
     'localgov_services_sublanding',
@@ -58,10 +58,13 @@ class PagesIntegrationTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
-    $this->adminUser = $this->drupalCreateUser(['bypass node access', 'administer nodes']);
+    $this->adminUser = $this->drupalCreateUser([
+      'bypass node access',
+      'administer nodes',
+    ]);
     $this->nodeStorage = $this->container->get('entity_type.manager')->getStorage('node');
   }
 
@@ -109,7 +112,7 @@ class PagesIntegrationTest extends BrowserTestBase {
     $form->checkField('edit-status-value');
     $form->pressButton('edit-submit');
 
-    $this->assertText('Step by Step 1');
+    $this->assertSession()->pageTextContains('Step by Step 1');
     $trail = ['' => 'Home'];
     $trail += ['landing-page-1' => 'Landing Page 1'];
     $trail += ['landing-page-1/sublanding-1' => 'Sublanding 1'];
@@ -133,7 +136,7 @@ class PagesIntegrationTest extends BrowserTestBase {
     ]);
 
     $this->drupalGet('step-by-step/overview-1/page-1');
-    $this->assertText('Page 1');
+    $this->assertSession()->pageTextContains('Page 1');
     $trail = ['' => 'Home'];
     $trail += ['step-by-step/overview-1' => 'Overview 1'];
     $this->assertBreadcrumb(NULL, $trail);

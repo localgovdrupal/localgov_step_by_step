@@ -25,7 +25,7 @@ class StepByStepSummariesTest extends WebDriverTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'localgov_step_by_step',
   ];
 
