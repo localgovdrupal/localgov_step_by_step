@@ -35,8 +35,6 @@ function localgov_step_by_step_theme() {
   ];
 }
 
-
-
 /**
  * Implements hook_localgov_role_default().
  */
