@@ -7,9 +7,9 @@ dependencies:
     - node
     - views
   theme:
-    - localgov_theme
+    - localgov_base
 id: localgov_step_by_step_prev_next
-theme: localgov_theme
+theme: localgov_base
 region: content_bottom
 weight: 100
 provider: null

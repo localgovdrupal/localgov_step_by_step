@@ -13,7 +13,7 @@ class StepByStepSummariesTest extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'localgov_theme';
+  protected $defaultTheme = 'localgov_base';
 
   /**
    * {@inheritdoc}

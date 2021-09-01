@@ -4,9 +4,9 @@ dependencies:
   module:
     - localgov_step_by_step
   theme:
-    - localgov_theme
+    - localgov_base
 id: localgov_part_of_step_heading
-theme: localgov_theme
+theme: localgov_base
 region: content
 weight: -8
 provider: null
