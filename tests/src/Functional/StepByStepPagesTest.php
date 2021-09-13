@@ -42,7 +42,7 @@ class StepByStepPagesTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'localgov_core',
     'localgov_step_by_step',
     'field_ui',
@@ -51,7 +51,7 @@ class StepByStepPagesTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $this->adminUser = $this->drupalCreateUser([
