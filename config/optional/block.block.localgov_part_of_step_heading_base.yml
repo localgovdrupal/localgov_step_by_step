@@ -5,7 +5,7 @@ dependencies:
     - localgov_step_by_step
   theme:
     - localgov_base
-id: localgov_part_of_step_heading
+id: localgov_part_of_step_heading_base
 theme: localgov_base
 region: content
 weight: -8
