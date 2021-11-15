@@ -29,7 +29,7 @@ class StepByStepBlocksTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'classy';
+  protected $defaultTheme = 'stable';
 
   /**
    * A user with the 'administer blocks' permission.
@@ -83,14 +83,13 @@ class StepByStepBlocksTest extends BrowserTestBase {
     ]);
 
     $this->drupalGet($overview->toUrl()->toString());
-    $this->assertSession()->responseNotContains('block-step-part-of-block');
+    $this->assertSession()->linkNotExists($overview_title);
     $this->assertSession()->pageTextNotContains('Part of');
     $this->drupalGet($page->toUrl()->toString());
-    $this->assertSession()->responseContains('block-step-part-of-block');
     $this->assertSession()->pageTextContains('Part of');
-    $this->assertSession()->pageTextContains($overview_title);
+    $this->assertSession()->linkExists($overview_title);
     $this->drupalGet($article->toUrl()->toString());
-    $this->assertSession()->responseNotContains('block-step-part-of-block');
+    $this->assertSession()->linkNotExists($overview_title);
     $this->assertSession()->pageTextNotContains('Part of');
   }
 
