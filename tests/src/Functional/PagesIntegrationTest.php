@@ -136,7 +136,7 @@ class PagesIntegrationTest extends BrowserTestBase {
       'value' => 'Science is the search for truth, that is the effort to understand the world: it involves the rejection of bias, of dogma, of revelation, but not the rejection of morality.',
       'summary' => 'One of the greatest joys known to man is to take a flight into ignorance in search of knowledge.',
     ];
-    $node = $this->createNode([
+    $this->createNode([
       'title' => 'Test Step By Step',
       'body' => $body,
       'type' => 'localgov_step_by_step_overview',
