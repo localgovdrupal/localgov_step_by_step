@@ -8,9 +8,10 @@ use Drupal\Tests\BrowserTestBase;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
 use Drupal\Tests\system\Functional\Menu\AssertBreadcrumbTrait;
 use Drupal\Tests\taxonomy\Traits\TaxonomyTestTrait;
+use Drupal\Tests\Traits\Core\CronRunTrait;
 
 /**
- * Tests pages working together with pathauto, services and topics.
+ * Tests pages working together with search, pathauto, services and topics.
  *
  * @group localgov_step_by_step
  */
@@ -19,6 +20,7 @@ class PagesIntegrationTest extends BrowserTestBase {
   use NodeCreationTrait;
   use AssertBreadcrumbTrait;
   use TaxonomyTestTrait;
+  use CronRunTrait;
 
   /**
    * Test breadcrumbs in the Standard profile.
@@ -58,6 +60,8 @@ class PagesIntegrationTest extends BrowserTestBase {
     'localgov_services_navigation',
     'localgov_topics',
     'localgov_step_by_step',
+    'localgov_search',
+    'localgov_search_db',
   ];
 
   /**
@@ -122,6 +126,29 @@ class PagesIntegrationTest extends BrowserTestBase {
     $trail += ['landing-page-1' => 'Landing Page 1'];
     $trail += ['landing-page-1/sublanding-1' => 'Sublanding 1'];
     $this->assertBreadcrumb(NULL, $trail);
+  }
+
+  /**
+   * LocalGov Search integration.
+   */
+  public function testLocalgovSearch() {
+    $body = [
+      'value' => 'Science is the search for truth, that is the effort to understand the world: it involves the rejection of bias, of dogma, of revelation, but not the rejection of morality.',
+      'summary' => 'One of the greatest joys known to man is to take a flight into ignorance in search of knowledge.',
+    ];
+    $this->createNode([
+      'title' => 'Test Step By Step',
+      'body' => $body,
+      'type' => 'localgov_step_by_step_overview',
+      'status' => NodeInterface::PUBLISHED,
+    ]);
+    $this->cronRun();
+
+    $this->drupalGet('search', ['query' => ['s' => 'bias+dogma+revelation']]);
+    $this->assertSession()->pageTextContains('Test Step By Step');
+    $this->assertSession()->responseContains('<strong>bias</strong>');
+    $this->assertSession()->responseContains('<strong>dogma</strong>');
+    $this->assertSession()->responseContains('<strong>revelation</strong>');
   }
 
   /**
