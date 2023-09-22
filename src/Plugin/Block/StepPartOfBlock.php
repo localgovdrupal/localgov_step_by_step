@@ -44,6 +44,13 @@ class StepPartOfBlock extends BlockBase implements ContainerFactoryPluginInterfa
   protected $node;
 
   /**
+   * Current route object.
+   *
+   * @var \Drupal\Core\Routing\ResettableStackedRouteMatchInterface
+   */
+  protected $routeMatch;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
