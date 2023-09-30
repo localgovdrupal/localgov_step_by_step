@@ -97,7 +97,7 @@ class StepPartOfBlock extends BlockBase implements ContainerFactoryPluginInterfa
   public function build() {
     $build = [];
 
-    if ($this->node->localgov_step_parent and $this->node->localgov_step_parent->entity) {
+    if ($this->node->localgov_step_parent && $this->node->localgov_step_parent->entity) {
       $build[] = [
         '#theme' => 'step_by_step_part_of_block',
         '#label' => $this->node->localgov_step_parent->entity->label(),
