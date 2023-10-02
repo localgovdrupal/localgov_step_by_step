@@ -179,10 +179,10 @@ function localgov_step_by_step_preprocess_views_view_list(array &$variables) {
 
   $current_nid = $is_step_by_step_nav ? $view->args[0] : '';
 
-  if ($is_step_by_step_nav and $is_step_by_step_prev_next_block) {
+  if ($is_step_by_step_nav && $is_step_by_step_prev_next_block) {
     _localgov_step_by_step_find_prev_next_steps($current_nid, $variables);
   }
-  elseif ($is_step_by_step_nav and $is_step_by_step_nav_block) {
+  elseif ($is_step_by_step_nav && $is_step_by_step_nav_block) {
     _localgov_step_by_step_mark_current_step($current_nid, $variables);
 
   }

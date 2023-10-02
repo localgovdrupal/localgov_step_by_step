@@ -44,6 +44,13 @@ class StepPartOfBlock extends BlockBase implements ContainerFactoryPluginInterfa
   protected $node;
 
   /**
+   * Current route object.
+   *
+   * @var \Drupal\Core\Routing\ResettableStackedRouteMatchInterface
+   */
+  protected $routeMatch;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -90,7 +97,7 @@ class StepPartOfBlock extends BlockBase implements ContainerFactoryPluginInterfa
   public function build() {
     $build = [];
 
-    if ($this->node->localgov_step_parent and $this->node->localgov_step_parent->entity) {
+    if ($this->node->localgov_step_parent && $this->node->localgov_step_parent->entity) {
       $build[] = [
         '#theme' => 'step_by_step_part_of_block',
         '#label' => $this->node->localgov_step_parent->entity->label(),
