@@ -6,7 +6,7 @@ use Drupal\node\NodeInterface;
 use Drupal\preview_link\PreviewLinkAutopopulatePluginBase;
 
 /**
- * Auto-populate Guide preview links.
+ * Auto-populate Step-by-step preview links.
  *
  * @PreviewLinkAutopopulate(
  *   id = "localgov_step_by_step",
@@ -28,7 +28,7 @@ class StepBySteps extends PreviewLinkAutopopulatePluginBase {
   public function getPreviewEntities(): array {
     $step_by_step_nodes = [];
 
-    // Find guide overview.
+    // Find step-by-step overview.
     $node = $this->getEntity();
     if ($node->bundle() == 'localgov_step_by_step_overview') {
       $overview = $node;
@@ -38,7 +38,7 @@ class StepBySteps extends PreviewLinkAutopopulatePluginBase {
     }
     $step_by_step_nodes[] = $overview;
 
-    // Find guide pages.
+    // Find step-by-step pages.
     $pages = $overview->get('localgov_step_by_step_pages')->referencedEntities();
     foreach ($pages as $page) {
       if ($page instanceof NodeInterface && $page->access('view')) {
