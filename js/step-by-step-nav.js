@@ -20,7 +20,7 @@
           $(this).parents('.step').find('.step__summary').addClass('step-show-summary');
           $(this).text(stepByStep.hideStepText);
           $(this).attr("aria-expanded", "true");
-          $(this).attr('aria-label', "Hide step summary - " + stepTitle);
+          $(this).attr('aria-label', Drupal.t("Hide step summary - !summary_message", {"!summary_message": stepTitle}));
         });
         // 'Hide all' control displayed if all steps are shown.
         if ($('.step__summary').length === $('.step-show-summary').length) {
@@ -35,7 +35,7 @@
           $(this).parents('.step').find('.step__summary').removeClass('step-show-summary');
           $(this).attr("aria-expanded", "false");
           $(this).text(stepByStep.showStepText);
-          $(this).attr('aria-label', "Show step summary - " + stepTitle);
+          $(this).attr('aria-label',  Drupal.t("Show step summary - !summary_message", {"!summary_message": stepTitle}));
         });
         // 'Show all' control displayed if any steps are hidden.
         $('.step-master').text(stepByStep.showAllText);
