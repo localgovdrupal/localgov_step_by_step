@@ -2,10 +2,10 @@
 
 namespace Drupal\Tests\localgov_step_by_step\Functional;
 
-use Drupal\node\NodeInterface;
 use Drupal\Tests\BrowserTestBase;
-use Drupal\Tests\node\Traits\NodeCreationTrait;
 use Drupal\Tests\TestFileCreationTrait;
+use Drupal\Tests\node\Traits\NodeCreationTrait;
+use Drupal\node\NodeInterface;
 
 /**
  * Tests user blocks.
