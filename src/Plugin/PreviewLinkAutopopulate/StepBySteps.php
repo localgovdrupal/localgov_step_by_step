@@ -2,7 +2,6 @@
 
 namespace Drupal\localgov_step_by_step\Plugin\PreviewLinkAutopopulate;
 
-use Drupal\node\Entity\Node;
 use Drupal\node\NodeInterface;
 use Drupal\preview_link\PreviewLinkAutopopulatePluginBase;
 
@@ -39,7 +38,7 @@ class StepBySteps extends PreviewLinkAutopopulatePluginBase {
       $overview = $node->get('localgov_step_parent')->entity;
     }
 
-    if ($overview instanceof Node) {
+    if ($overview instanceof NodeInterface) {
       $step_by_step_nodes[] = $overview;
 
       // Find step-by-step pages.
