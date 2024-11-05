@@ -26,6 +26,7 @@ class StepBySteps extends PreviewLinkAutopopulatePluginBase {
    * {@inheritdoc}
    */
   public function getPreviewEntities(): array {
+    $overview = NULL;
     $step_by_step_nodes = [];
 
     // Find step-by-step overview.
@@ -36,13 +37,16 @@ class StepBySteps extends PreviewLinkAutopopulatePluginBase {
     elseif ($node->bundle() == 'localgov_step_by_step_page') {
       $overview = $node->get('localgov_step_parent')->entity;
     }
-    $step_by_step_nodes[] = $overview;
 
-    // Find step-by-step pages.
-    $pages = $overview->get('localgov_step_by_step_pages')->referencedEntities();
-    foreach ($pages as $page) {
-      if ($page instanceof NodeInterface && $page->access('view')) {
-        $step_by_step_nodes[] = $page;
+    if ($overview instanceof NodeInterface) {
+      $step_by_step_nodes[] = $overview;
+
+      // Find step-by-step pages.
+      $pages = $overview->get('localgov_step_by_step_pages')->referencedEntities();
+      foreach ($pages as $page) {
+        if ($page instanceof NodeInterface && $page->access('view')) {
+          $step_by_step_nodes[] = $page;
+        }
       }
     }
 
