@@ -1,7 +1,7 @@
 name: LocalGov Step by step
 type: module
 description: Provides the Step by step page.
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11
 package: LocalGov Drupal
 
 dependencies:
