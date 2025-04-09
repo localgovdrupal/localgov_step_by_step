@@ -101,7 +101,8 @@ class StepPartOfBlock extends BlockBase implements ContainerFactoryPluginInterfa
       $langcode = $this->node->langcode->value;
       if ($this->node->isDefaultTranslation()) {
         $parent_entity = $this->node->localgov_step_parent->entity;
-      } elseif ($this->node->localgov_step_parent->entity->hasTranslation($langcode)) {
+      }
+      elseif ($this->node->localgov_step_parent->entity->hasTranslation($langcode)) {
         $parent_entity = $this->node->localgov_step_parent->entity->getTranslation($langcode);
       }
       $build[] = [
