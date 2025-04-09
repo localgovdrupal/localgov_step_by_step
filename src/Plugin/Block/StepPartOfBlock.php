@@ -98,11 +98,18 @@ class StepPartOfBlock extends BlockBase implements ContainerFactoryPluginInterfa
     $build = [];
 
     if ($this->node->localgov_step_parent && $this->node->localgov_step_parent->entity) {
+      $langcode = $this->node->langcode->value;
+      if ($this->node->isDefaultTranslation()) {
+        $parent_entity = $this->node->localgov_step_parent->entity;
+      } elseif ($this->node->localgov_step_parent->entity->hasTranslation($langcode)) {
+        $parent_entity = $this->node->localgov_step_parent->entity->getTranslation($langcode);
+      }
       $build[] = [
         '#theme' => 'step_by_step_part_of_block',
-        '#label' => $this->node->localgov_step_parent->entity->label(),
-        '#url' => $this->node->localgov_step_parent->entity->toUrl(),
+        '#label' => $parent_entity->label(),
+        '#url' => $parent_entity->toUrl(),
       ];
+      $build['#cache']['contexts'][] = 'languages:language_interface';
     }
 
     return $build;
@@ -122,7 +129,7 @@ class StepPartOfBlock extends BlockBase implements ContainerFactoryPluginInterfa
    * {@inheritdoc}
    */
   public function getCacheContexts() {
-    return Cache::mergeContexts(parent::getCacheContexts(), ['route']);
+    return Cache::mergeContexts(parent::getCacheContexts(), ['languages:language_interface', 'route']);
   }
 
 }
