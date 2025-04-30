@@ -3,98 +3,177 @@
  * Additional behaviour for the Step by step navigation.
  */
 
-(function(Drupal) {
+(function (Drupal) {
   Drupal.behaviors.stepByStepNav = {
     attach(context) {
+      /**
+       * Toggles the state of the control button.
+       *
+       * @param {boolean} pressed
+       */
+      function toggleControlButton(pressed) {
+        stepControlButton.innerHTML = Drupal.theme.controlButtonText(pressed);
+        stepControlButton.setAttribute("aria-pressed", pressed);
+
+        if (stepControlIcon && pressed) {
+          stepControlIcon.classList.add(stepControlIcon.dataset.pressedClass);
+          stepControlIcon.classList.remove(
+            stepControlIcon.dataset.unpressedClass,
+          );
+        } else if (stepControlIcon && !pressed) {
+          stepControlIcon.classList.add(stepControlIcon.dataset.unpressedClass);
+          stepControlIcon.classList.remove(
+            stepControlIcon.dataset.pressedClass,
+          );
+        }
+      }
+
+      /**
+       * Handle clicks on individual step buttons.
+       *
+       * @param {object} step
+       *   A simple object containing button, link, summary, and title of a
+       *   given step.
+       */
+      function handleControlButtonClick({ currentTarget, target }) {
+        let message, pressed;
+
+        if (currentTarget !== target) {
+          return;
+        }
+
+        pressed = target.getAttribute("aria-pressed") !== "true";
+        toggleControlButton(pressed);
+        steps.forEach((step) => {
+          if (step.button.getAttribute("aria-expanded") !== String(pressed)) {
+            toggleStepButton(step, pressed);
+          }
+        });
+        // Ensure focus stays with button.
+        target.focus();
+
+        if (pressed) {
+          message = Drupal.t('Step summaries expanded');
+        } else {
+          message = Drupal.t('Step summaries collapsed');
+        }
+
+        Drupal.announce(message);
+      }
+
+      /**
+       * Toggles the state of a step button.
+       *
+       * @param {object} step
+       *   A simple object containing button, link, summary, and title of a
+       *   given step.
+       */
+      function toggleStepButton({ button, summary, title }, expanded) {
+        let ariaLabel;
+
+        if (expanded) {
+          ariaLabel = Drupal.t("Hide step summary - !stepTitle", {
+            "!stepTitle": title,
+          });
+        } else {
+          ariaLabel = Drupal.t("Show step summary - !stepTitle", {
+            "!stepTitle": title,
+          });
+        }
+
+        button.innerHTML = Drupal.theme("stepButtonText", expanded);
+        button.setAttribute("aria-expanded", expanded);
+        button.setAttribute("aria-label", ariaLabel);
+        summary.classList[expanded ? "add" : "remove"]("step-show-summary");
+      }
+
+      /**
+       * Handle clicks on Show/Hide all summaries button.
+       *
+       * @param {Event} event
+       *   The event object passed in by the listener.
+       */
+      function handleStepButtonClick({ currentTarget, target }) {
+        let stepIndex, hiddenSteps;
+
+        if (currentTarget !== target) {
+          return;
+        }
+
+        stepIndex = steps.findIndex((step) => step.button === target);
+        toggleStepButton(
+          steps[stepIndex],
+          target.getAttribute("aria-expanded") !== "true",
+        );
+        hiddenSteps = !!steps.filter(
+          (step) => step.button.getAttribute("aria-expanded") === "false",
+        ).length;
+
+        // 'Show all' control displayed if any steps are hidden, and 'Hide all'
+        // control displayed otherwise.
+        toggleControlButton(!hiddenSteps);
+      }
+
+      // Set up interactivity.
+
+      const [stepListEl] = once("sts-steplist", "ol.step-list", context);
+      const steps = [];
+      let stepButtonTemplate,
+        stepControlButton,
+        stepControlIcon,
+        stepControlMarkup,
+        stepControlTemplate,
+        stepEls,
+        stepListParentEl;
+
+      if (!stepListEl) {
+        return;
+      }
+
+      stepListParentEl = stepListEl.parentElement;
+      stepEls = once("sts-step", ".step", stepListEl);
+
+      // Set up master control button.
+      stepControlTemplate = document.createElement("template");
+      stepControlTemplate.innerHTML = Drupal.theme("controlButtonHtml");
+      stepControlMarkup = stepControlTemplate.content.cloneNode(true);
+      stepControlButton = stepControlMarkup.querySelector("button");
+      stepControlIcon = stepControlMarkup.querySelector("i.fas");
+
+      // Insert button into DOM.
+      stepListParentEl.prepend(stepControlMarkup);
+
+      // Populate button.
+      toggleControlButton(false);
+
+      // Add button event listener.
+      stepControlButton.addEventListener("click", handleControlButtonClick);
+
+      // Set up step buttons.
+      stepButtonTemplate = document.createElement("template");
+      stepButtonTemplate.innerHTML = Drupal.theme("stepButtonHtml");
+      stepEls.forEach((stepEl) => {
+        const buttonMarkup = stepButtonTemplate.content.cloneNode(true);
+        const stepTitleEl = stepEl.querySelector(".step__title");
+        const step = {};
+
+        step.button = buttonMarkup.querySelector("button");
+        step.link = stepEl.querySelector("a[href]");
+        step.summary = stepEl.querySelector(".step__summary");
+        step.title = stepTitleEl.textContent.trim();
+
+        // Insert button into DOM.
+        stepTitleEl.append(buttonMarkup);
+
+        // Populate button.
+        toggleStepButton(step, false);
+
+        // Add button event listener.
+        step.button.addEventListener("click", handleStepButtonClick);
+
+        // Cache each step for later use.
+        steps.push(step);
+      });
     },
   };
-
-  // const stepByStep = {};
-  // stepByStep.showAllText = 'Show summaries';
-  // stepByStep.hideAllText = 'Hide summaries';
-  // stepByStep.showStepText = 'Show step summary';
-  // stepByStep.hideStepText = 'Hide step summary';
-
-  // // Set visibility based on specified button.step-show elements.
-  // function summaryVisiblity(elements, cmd) {
-  //   switch(cmd) {
-  //     case 'show':
-  //       elements.each(function() {
-  //         var stepTitle = $(this).parents('.step__title').find('a').text();
-  //         $(this).parents('.step').find('.step__summary').addClass('step-show-summary');
-  //         $(this).text(stepByStep.hideStepText);
-  //         $(this).attr("aria-expanded", "true");
-  //         $(this).attr('aria-label', Drupal.t("Hide step summary - !summary_message", {"!summary_message": stepTitle}));
-  //       });
-  //       // 'Hide all' control displayed if all steps are shown.
-  //       if ($('.step__summary').length === $('.step-show-summary').length) {
-  //         $('.step-master').text(stepByStep.hideAllText);
-  //         $('.summaries-control i').addClass('fa-eye-slash').removeClass('fa-eye');
-  //       }
-  //       break;
-
-  //     case 'hide':
-  //       elements.each(function() {
-  //         var stepTitle = $(this).parents('.step__title').find('a').text();
-  //         $(this).parents('.step').find('.step__summary').removeClass('step-show-summary');
-  //         $(this).attr("aria-expanded", "false");
-  //         $(this).text(stepByStep.showStepText);
-  //         $(this).attr('aria-label',  Drupal.t("Show step summary - !summary_message", {"!summary_message": stepTitle}));
-  //       });
-  //       // 'Show all' control displayed if any steps are hidden.
-  //       $('.step-master').text(stepByStep.showAllText);
-  //       $('.summaries-control i').addClass('fa-eye').removeClass('fa-eye-slash');
-  //       break;
-  //   }
-  // }
-
-  // // Insert show all button.
-  // $("<div class='summaries-control'><i class='fas fa-eye'></i><button aria-expanded='false' class='step-master ml-2'>" + stepByStep.showAllText + "</button></div>").insertBefore("ol.step-list");
-
-  // // Insert hide/show button for each step.
-  // function stepSummaryButton(isVisible, stepTitle) {
-  //   var $container = $("<span class='step-summary-container'>");
-  //   var $button = $("<button class='step-show'>");
-  //   $button.attr('aria-expanded', isVisible ? "true" : "false");
-  //   if (isVisible) {
-  //     $button.attr('aria-label', Drupal.t("Hide step summary - !summary_message", {"!summary_message": stepTitle}));
-  //   } else {
-  //     $button.attr('aria-label', Drupal.t("Show step summary - !summary_message", {"!summary_message": stepTitle}));
-  //   }
-  //   $button.text(isVisible ? stepByStep.hideStepText : stepByStep.showStepText);
-  //   $container.append($button);
-  //   return $container;
-  // }
-
-  // $("ol.step-list .step").each(function() {
-  //   var isVisible = $(this).hasClass('step--active');
-  //   var stepTitle = $(this).find('.step__title').text();
-  //   if (isVisible) {
-  //     $(this).find('.step__summary').addClass('step-show-summary');
-  //   }
-  //   $(this).find('.step__title').append(stepSummaryButton(isVisible, stepTitle));
-  // });
-
-  // // Show / hide all.
-  // $('.step-master').on("click", function () {
-  //   $('.summaries-control i').toggleClass('fa-eye fa-eye-slash');
-  //   if ($(this).text() === stepByStep.showAllText) {
-  //     $(this).text(stepByStep.hideAllText).attr('aria-expanded', true);
-  //     summaryVisiblity($('.step-show'), 'show');
-  //   } else {
-  //     $(this).text(stepByStep.showAllText).attr('aria-expanded', false);
-  //     summaryVisiblity($('.step-show'), 'hide');
-  //   }
-  // });
-
-  // // Show / hide single step.
-  // $('.step-show').on("click", function () {
-  //   $(this).parents('.step').find('.step__summary').toggleClass('step-show-summary');
-  //   if ($(this).text() === stepByStep.showStepText) {
-  //     summaryVisiblity($(this), 'show');
-  //   } else {
-  //     summaryVisiblity($(this), 'hide');
-  //   }
-  // });
-
 })(Drupal);
