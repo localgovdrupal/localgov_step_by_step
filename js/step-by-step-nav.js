@@ -158,12 +158,12 @@
       stepEls.forEach((stepEl, index) => {
         const buttonMarkup = stepButtonTemplate.content.cloneNode(true);
         const stepTitleEl = stepEl.querySelector(".step__title");
-        const step = {};
-
-        step.button = buttonMarkup.querySelector("button");
-        step.link = stepEl.querySelector("a[href]");
-        step.summary = stepEl.querySelector(".step__summary");
-        step.title = stepTitleEl.textContent.trim();
+        const step = {
+          button: buttonMarkup.querySelector("button"),
+          link: stepEl.querySelector("a[href]"),
+          summary: stepEl.querySelector(".step__summary"),
+          title: stepTitleEl.textContent.trim(),
+        };
 
         // Insert button into DOM.
         stepTitleEl.append(buttonMarkup);
