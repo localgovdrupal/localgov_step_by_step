@@ -7,13 +7,37 @@
   Drupal.behaviors.stepByStepNav = {
     attach(context) {
       /**
+       * Toggles all summaries
+       */
+      function toggleAllSummaries(expanded) {
+        const attrValue = String(expanded);
+        let message;
+
+        steps.forEach((step) => {
+          if (step.button.getAttribute(stepAriaAttr) !== attrValue) {
+            toggleStepButton(step, expanded);
+          }
+        });
+
+        steps.filter((step) => step.button.getAttribute(stepAriaAttr) !== attrValue)
+
+        if (expanded) {
+          message = Drupal.t("Step summaries expanded");
+        } else {
+          message = Drupal.t("Step summaries collapsed");
+        }
+
+        Drupal.announce(message);
+      }
+
+      /**
        * Toggles the state of the control button.
        *
        * @param {boolean} pressed
        */
       function toggleControlButton(pressed) {
         stepControlButton.innerHTML = Drupal.theme.controlButtonText(pressed);
-        stepControlButton.setAttribute("aria-pressed", pressed);
+        stepControlButton.setAttribute(stepControlAriaAttr, pressed);
 
         if (stepControlIcon && pressed) {
           stepControlIcon.classList.add(stepControlIcon.dataset.pressedClass);
@@ -36,29 +60,15 @@
        *   given step.
        */
       function handleControlButtonClick({ currentTarget, target }) {
-        let message, pressed;
+        let message;
 
         if (currentTarget !== target) {
           return;
         }
 
-        pressed = target.getAttribute("aria-pressed") !== "true";
+        const pressed = target.getAttribute(stepControlAriaAttr) !== "true";
         toggleControlButton(pressed);
-        steps.forEach((step) => {
-          if (step.button.getAttribute("aria-expanded") !== String(pressed)) {
-            toggleStepButton(step, pressed);
-          }
-        });
-        // Ensure focus stays with button.
-        target.focus();
-
-        if (pressed) {
-          message = Drupal.t('Step summaries expanded');
-        } else {
-          message = Drupal.t('Step summaries collapsed');
-        }
-
-        Drupal.announce(message);
+        toggleAllSummaries(pressed);
       }
 
       /**
@@ -82,7 +92,7 @@
         }
 
         button.innerHTML = Drupal.theme("stepButtonText", expanded);
-        button.setAttribute("aria-expanded", expanded);
+        button.setAttribute(stepAriaAttr, expanded);
         button.setAttribute("aria-label", ariaLabel);
         summary.classList[expanded ? "add" : "remove"]("step-show-summary");
       }
@@ -93,21 +103,19 @@
        * @param {Event} event
        *   The event object passed in by the listener.
        */
-      function handleStepButtonClick({ currentTarget, target }) {
-        let stepIndex, hiddenSteps;
-
+      function handleStepButtonClick(index, { currentTarget, target }) {
         if (currentTarget !== target) {
           return;
         }
 
-        stepIndex = steps.findIndex((step) => step.button === target);
         toggleStepButton(
-          steps[stepIndex],
-          target.getAttribute("aria-expanded") !== "true",
+          steps[index],
+          target.getAttribute(stepAriaAttr) !== "true",
         );
-        hiddenSteps = !!steps.filter(
-          (step) => step.button.getAttribute("aria-expanded") === "false",
-        ).length;
+
+        const hiddenSteps = !!steps.some(
+          (step) => step.button.getAttribute(stepAriaAttr) === "false",
+        );
 
         // 'Show all' control displayed if any steps are hidden, and 'Hide all'
         // control displayed otherwise.
@@ -117,31 +125,26 @@
       // Set up interactivity.
 
       const [stepListEl] = once("sts-steplist", "ol.step-list", context);
+      const stepAriaAttr = "aria-expanded";
+      const stepControlAriaAttr = "aria-pressed";
       const steps = [];
-      let stepButtonTemplate,
-        stepControlButton,
-        stepControlIcon,
-        stepControlMarkup,
-        stepControlTemplate,
-        stepEls,
-        stepListParentEl;
 
       if (!stepListEl) {
         return;
       }
 
-      stepListParentEl = stepListEl.parentElement;
-      stepEls = once("sts-step", ".step", stepListEl);
+      const stepEls = once("sts-step", ".step", stepListEl);
 
       // Set up master control button.
-      stepControlTemplate = document.createElement("template");
+      const stepControlTemplate = document.createElement("template");
       stepControlTemplate.innerHTML = Drupal.theme("controlButtonHtml");
-      stepControlMarkup = stepControlTemplate.content.cloneNode(true);
-      stepControlButton = stepControlMarkup.querySelector("button");
-      stepControlIcon = stepControlMarkup.querySelector("i.fas");
+
+      const stepControlMarkup = stepControlTemplate.content.cloneNode(true);
+      const stepControlButton = stepControlMarkup.querySelector("button");
+      const stepControlIcon = stepControlMarkup.querySelector("i.fas");
 
       // Insert button into DOM.
-      stepListParentEl.prepend(stepControlMarkup);
+      stepListEl.parentElement.prepend(stepControlMarkup);
 
       // Populate button.
       toggleControlButton(false);
@@ -150,9 +153,9 @@
       stepControlButton.addEventListener("click", handleControlButtonClick);
 
       // Set up step buttons.
-      stepButtonTemplate = document.createElement("template");
+      const stepButtonTemplate = document.createElement("template");
       stepButtonTemplate.innerHTML = Drupal.theme("stepButtonHtml");
-      stepEls.forEach((stepEl) => {
+      stepEls.forEach((stepEl, index) => {
         const buttonMarkup = stepButtonTemplate.content.cloneNode(true);
         const stepTitleEl = stepEl.querySelector(".step__title");
         const step = {};
@@ -168,8 +171,11 @@
         // Populate button.
         toggleStepButton(step, false);
 
-        // Add button event listener.
-        step.button.addEventListener("click", handleStepButtonClick);
+        // Add button event listener, passing current index to handler.
+        step.button.addEventListener(
+          "click",
+          handleStepButtonClick.bind(null, index),
+        );
 
         // Cache each step for later use.
         steps.push(step);
