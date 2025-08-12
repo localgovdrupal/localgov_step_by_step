@@ -42,7 +42,7 @@
    *
    * NOTE:
    *   - the wrapper div must exist
-   *   - button aria-pressed attribute is controlled byt step-by-step-nav.js
+   *   - button data-pressed attribute is controlled by step-by-step-nav.js
    *   - button type attribute must exist
    *   - if using Fontawesome icons, the data attributes must be present
    *
@@ -58,7 +58,7 @@
           data-unpressed-class="fa-eye"
         ></i>
         <button
-          aria-pressed="false"
+          data-pressed="false"
           class="step-master ml-2"
           type="button"
         ></button>

@@ -8,6 +8,9 @@
     attach(context) {
       /**
        * Toggles all summaries
+       *
+       * @param {boolean} expanded
+       *   The state to set on the individual summaries.
        */
       function toggleAllSummaries(expanded) {
         const attrValue = String(expanded);
@@ -34,10 +37,16 @@
        * Toggles the state of the control button.
        *
        * @param {boolean} pressed
+       *   The state to set on the control button.
+       * @note As the label of the button changes, we're not using aria-pressed,
+       *   but rather a custom data-pressed attribute to track the current state
+       *   of the button. Per MDN, "If you want the label to toggle [...] don't
+       *   use aria-pressed."
+       * @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-pressed
        */
       function toggleControlButton(pressed) {
         stepControlButton.innerHTML = Drupal.theme.controlButtonText(pressed);
-        stepControlButton.setAttribute(stepControlAriaAttr, pressed);
+        stepControlButton.setAttribute(stepControlStateAttr, pressed);
 
         if (stepControlIcon && pressed) {
           stepControlIcon.classList.add(stepControlIcon.dataset.pressedClass);
@@ -60,13 +69,11 @@
        *   given step.
        */
       function handleControlButtonClick({ currentTarget, target }) {
-        let message;
-
         if (currentTarget !== target) {
           return;
         }
 
-        const pressed = target.getAttribute(stepControlAriaAttr) !== "true";
+        const pressed = target.getAttribute(stepControlStateAttr) !== "true";
         toggleControlButton(pressed);
         toggleAllSummaries(pressed);
       }
@@ -122,23 +129,25 @@
         toggleControlButton(!hiddenSteps);
       }
 
-      // Set up interactivity.
-
+      /**
+       * Set up global variables.
+       */
       const [stepListEl] = once("sts-steplist", "ol.step-list", context);
-      const stepAriaAttr = "aria-expanded";
-      const stepControlAriaAttr = "aria-pressed";
-      const steps = [];
 
       if (!stepListEl) {
         return;
       }
 
       const stepEls = once("sts-step", ".step", stepListEl);
+      const stepAriaAttr = "aria-expanded";
+      const stepControlStateAttr = "data-pressed";
+      const steps = [];
 
-      // Set up master control button.
+      /**
+       * Set up master control button.
+       */
       const stepControlTemplate = document.createElement("template");
       stepControlTemplate.innerHTML = Drupal.theme("controlButtonHtml");
-
       const stepControlMarkup = stepControlTemplate.content.cloneNode(true);
       const stepControlButton = stepControlMarkup.querySelector("button");
       const stepControlIcon = stepControlMarkup.querySelector("i.fas");
@@ -152,7 +161,9 @@
       // Add button event listener.
       stepControlButton.addEventListener("click", handleControlButtonClick);
 
-      // Set up step buttons.
+      /**
+       * Set up step buttons.
+       */
       const stepButtonTemplate = document.createElement("template");
       stepButtonTemplate.innerHTML = Drupal.theme("stepButtonHtml");
       stepEls.forEach((stepEl, index) => {
