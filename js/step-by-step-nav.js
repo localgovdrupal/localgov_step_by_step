@@ -130,6 +130,22 @@
       }
 
       /**
+       * Constructs an id attribute value for step summaries.
+       *
+       * aria-controls is not well-supported, but we should provide some means
+       * to relate the buttons to the summaries they control. It would be even
+       * better if they were siblings in the markup, but that would be a break-
+       * ing change.
+       *
+       * @return {string}
+       *   An attribute value consisting of 's' + a zero-padded random value
+       *   between 0-999.
+       */
+      function getStepId() {
+        return `s${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`;
+      }
+
+      /**
        * Set up global variables.
        */
       const [stepListEl] = once("sts-steplist", "ol.step-list", context);
@@ -167,6 +183,7 @@
       const stepButtonTemplate = document.createElement("template");
       stepButtonTemplate.innerHTML = Drupal.theme("stepButtonHtml");
       stepEls.forEach((stepEl, index) => {
+        const stepId = getStepId();
         const buttonMarkup = stepButtonTemplate.content.cloneNode(true);
         const stepTitleEl = stepEl.querySelector(".step__title");
         const step = {
@@ -182,11 +199,16 @@
         // Populate button.
         toggleStepButton(step, false);
 
-        // Add button event listener, passing current index to handler.
+        // Add button id attribute, add button event listener, passing current
+        // index to handler.
+        step.button.setAttribute("aria-controls", stepId);
         step.button.addEventListener(
           "click",
           handleStepButtonClick.bind(null, index),
         );
+
+        // Add id attribute to summary.
+        step.summary.id = stepId;
 
         // Cache each step for later use.
         steps.push(step);
