@@ -158,24 +158,7 @@
       const stepAriaAttr = "aria-expanded";
       const stepControlStateAttr = "data-pressed";
       const steps = [];
-
-      /**
-       * Set up master control button.
-       */
-      const stepControlTemplate = document.createElement("template");
-      stepControlTemplate.innerHTML = Drupal.theme("controlButtonHtml");
-      const stepControlMarkup = stepControlTemplate.content.cloneNode(true);
-      const stepControlButton = stepControlMarkup.querySelector("button");
-      const stepControlIcon = stepControlMarkup.querySelector("i.fas");
-
-      // Insert button into DOM.
-      stepListEl.parentElement.prepend(stepControlMarkup);
-
-      // Populate button.
-      toggleControlButton(false);
-
-      // Add button event listener.
-      stepControlButton.addEventListener("click", handleControlButtonClick);
+      const stepIds = [];
 
       /**
        * Set up step buttons.
@@ -212,7 +195,31 @@
 
         // Cache each step for later use.
         steps.push(step);
+
+        // Likewise with the id.
+        stepIds.push(stepId);
       });
+
+      /**
+       * Set up master control button.
+       */
+      const stepControlTemplate = document.createElement("template");
+      stepControlTemplate.innerHTML = Drupal.theme("controlButtonHtml");
+      const stepControlMarkup = stepControlTemplate.content.cloneNode(true);
+      const stepControlButton = stepControlMarkup.querySelector("button");
+      const stepControlIcon = stepControlMarkup.querySelector("i.fas");
+
+      // Insert button into DOM.
+      stepListEl.parentElement.prepend(stepControlMarkup);
+
+      // Populate button.
+      toggleControlButton(false);
+
+      // Add aria-controls attribute.
+      stepControlButton.setAttribute("aria-controls", stepIds.join(" "));
+
+      // Add button event listener.
+      stepControlButton.addEventListener("click", handleControlButtonClick);
     },
   };
 })(Drupal);
