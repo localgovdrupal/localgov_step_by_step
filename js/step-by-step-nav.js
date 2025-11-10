@@ -5,7 +5,7 @@
 
 (function lgdStepByStepScript($, Drupal) {
   Drupal.behaviors.lgdStepByStepNav = {
-    attach(context) {
+    attach() {
       const stepByStep = {};
       stepByStep.showAllText = 'Show summaries';
       stepByStep.hideAllText = 'Hide summaries';
@@ -16,7 +16,7 @@
       function summaryVisiblity(elements, cmd) {
         switch (cmd) {
           case 'show':
-            elements.each(() => {
+            elements.each(function showSummary() {
               const stepTitle = $(this)
                 .parents('.step__title')
                 .find('a')
@@ -44,7 +44,7 @@
             break;
 
           case 'hide':
-            elements.each(() => {
+            elements.each(function hideSummary() {
               const stepTitle = $(this)
                 .parents('.step__title')
                 .find('a')
@@ -68,6 +68,7 @@
               .addClass('fa-eye')
               .removeClass('fa-eye-slash');
             break;
+
           default:
             break;
         }
@@ -75,7 +76,9 @@
 
       // Insert show all button.
       $(
-        `<div class='summaries-control'><i class='fas fa-eye'></i><button aria-expanded='false' class='step-master ml-2'>${stepByStep.showAllText}</button></div>`,
+        `<div class='summaries-control'><i class='fas fa-eye'></i><button aria-expanded='false' class='step-master ml-2'>${
+          stepByStep.showAllText
+        }</button></div>`,
       ).insertBefore('ol.step-list');
 
       // Insert hide/show button for each step.
@@ -105,7 +108,7 @@
         return $container;
       }
 
-      $('ol.step-list .step').each(() => {
+      $('ol.step-list .step').each(function initializeStep() {
         const isVisible = $(this).hasClass('step--active');
         const stepTitle = $(this).find('.step__title').text();
         if (isVisible) {
@@ -117,7 +120,7 @@
       });
 
       // Show / hide all.
-      $('.step-master').on('click', () => {
+      $('.step-master').on('click', function toggleAllSteps() {
         $('.summaries-control i').toggleClass('fa-eye fa-eye-slash');
         if ($(this).text() === stepByStep.showAllText) {
           $(this).text(stepByStep.hideAllText).attr('aria-expanded', true);
@@ -129,7 +132,7 @@
       });
 
       // Show / hide single step.
-      $('.step-show').on('click', () => {
+      $('.step-show').on('click', function toggleSingleStep() {
         $(this)
           .parents('.step')
           .find('.step__summary')
@@ -142,4 +145,4 @@
       });
     },
   };
-})(jQuery, Drupal);
+})(jQuery, Drupal, drupalSettings);
