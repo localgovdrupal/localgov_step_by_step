@@ -74,12 +74,26 @@
         }
       }
 
+      var $summaries = $('ol.step-list .step .step__summary');
+      var anySummaries = false;
+      $summaries.each(function () {
+        if ($(this).text().trim() != '') {
+          anySummaries = true;
+          return false; // Exit loop early.
+        }
+      });
+
       // Insert show all button.
-      $(
-        `<div class='summaries-control'><i class='fas fa-eye'></i><button aria-expanded='false' class='step-master ml-2'>${
-          stepByStep.showAllText
-        }</button></div>`,
-      ).insertBefore('ol.step-list');
+      if (anySummaries) {
+        $(
+          `<div class='summaries-control'>
+            <i class='fas fa-eye'></i>
+            <button aria-expanded='false' class='step-master ml-2'>
+              ${stepByStep.showAllText}
+            </button>
+          </div>`,
+        ).insertBefore('ol.step-list');
+      }
 
       // Insert hide/show button for each step.
       function stepSummaryButton(isVisible, stepTitle) {
@@ -114,9 +128,12 @@
         if (isVisible) {
           $(this).find('.step__summary').addClass('step-show-summary');
         }
-        $(this)
-          .find('.step__title')
-          .append(stepSummaryButton(isVisible, stepTitle));
+        var $stepSummary = $(this).find('.step__summary');
+        if ($stepSummary.text().trim() != '') {
+          $(this)
+            .find('.step__title')
+            .append(stepSummaryButton(isVisible, stepTitle));
+        }
       });
 
       // Show / hide all.
