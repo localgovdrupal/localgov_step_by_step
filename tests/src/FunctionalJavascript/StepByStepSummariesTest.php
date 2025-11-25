@@ -60,19 +60,50 @@ class StepByStepSummariesTest extends WebDriverTestBase {
     // Load overview page.
     $this->drupalGet('/node/1');
 
+    // Debug: Output HTML to inspect page structure.
+    $page = $this->getSession()->getPage();
+
+    // Output diagnostics to GitHub Actions logs.
+    fwrite(STDERR, "\n=== INITIAL PAGE DEBUG ===\n");
+    fwrite(STDERR, "Button exists: " . ($page->findButton('Show summaries') ? 'YES' : 'NO') . "\n");
+    fwrite(STDERR, "Page title: " . $page->find('css', 'title')?->getText() . "\n");
+
+    // Output relevant HTML snippet (step-list container).
+    $stepListHtml = $page->find('css', '.step-list')?->getOuterHtml();
+    if ($stepListHtml) {
+      fwrite(STDERR, "Step-list container HTML:\n" . substr($stepListHtml, 0, 2000) . "\n");
+    }
+    else {
+      fwrite(STDERR, "No .step-list container found!\n");
+    }
+    fwrite(STDERR, "=== END INITIAL DEBUG ===\n\n");
+
     // Check summaries not visible.
     $this->assertSession()->pageTextNotContains('Step 1 summary');
 
-    $page = $this->getSession()->getPage();
-
     // Test 'Show summaries' button.
     $page->pressButton('Show summaries');
+
+    fwrite(STDERR, "\n=== AFTER SHOW SUMMARIES ===\n");
+    $stepListHtml = $page->find('css', '.step-list')?->getOuterHtml();
+    if ($stepListHtml) {
+      fwrite(STDERR, substr($stepListHtml, 0, 2000) . "\n");
+    }
+    fwrite(STDERR, "=== END AFTER SHOW ===\n\n");
     $this->assertSession()->pageTextContains('Step 1 summary');
     $this->assertSession()->pageTextContains('Step 2 summary');
     $this->assertSession()->pageTextContains('Step 3 summary');
 
     // Test 'Hide summaries' button.
     $page->pressButton('Hide summaries');
+
+    fwrite(STDERR, "\n=== AFTER HIDE SUMMARIES ===\n");
+    $stepListHtml = $page->find('css', '.step-list')?->getOuterHtml();
+    if ($stepListHtml) {
+      fwrite(STDERR, substr($stepListHtml, 0, 2000) . "\n");
+    }
+    fwrite(STDERR, "=== END AFTER HIDE ===\n\n");
+
     $this->assertSession()->pageTextNotContains('Step 1 summary');
     $this->assertSession()->pageTextNotContains('Step 2 summary');
     $this->assertSession()->pageTextNotContains('Step 3 summary');
