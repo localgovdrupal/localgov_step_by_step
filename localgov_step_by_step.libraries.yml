@@ -5,5 +5,11 @@ step-by-step-nav:
     base:
       css/step-by-step-nav.css: {}
   dependencies:
-    - core/jquery
+    - localgov_step_by_step/step-by-step-nav-theme
     - core/drupal
+    - core/drupal.once
+    - core/drupal.announce
+
+step-by-step-nav-theme:
+  js:
+    js/step-by-step-nav.theme.js: {}
