@@ -223,7 +223,7 @@
             stepTitleEl.append(buttonMarkup);
 
             // Populate button.
-            this.toggleStepButton(step, false);
+            this.toggleStepButton(step, stepEl.hasAttribute('aria-current'));
 
             // Add button id attribute, add button event listener, passing
             // current index to handler.
