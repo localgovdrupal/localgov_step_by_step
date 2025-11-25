@@ -95,16 +95,24 @@
          * @see https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-pressed
          */
         toggleControlButton(pressed) {
-          this.stepControlButton.innerHTML = Drupal.theme.controlButtonText(pressed);
-          this.stepControlButton.setAttribute(this.stepControlStateAttr, pressed);
+          this.stepControlButton.innerHTML =
+            Drupal.theme.controlButtonText(pressed);
+          this.stepControlButton.setAttribute(
+            this.stepControlStateAttr,
+            pressed
+          );
 
           if (this.stepControlIcon && pressed) {
-            this.stepControlIcon.classList.add(this.stepControlIcon.dataset.pressedClass);
+            this.stepControlIcon.classList.add(
+              this.stepControlIcon.dataset.pressedClass
+            );
             this.stepControlIcon.classList.remove(
               this.stepControlIcon.dataset.unpressedClass,
             );
           } else if (this.stepControlIcon && !pressed) {
-            this.stepControlIcon.classList.add(this.stepControlIcon.dataset.unpressedClass);
+            this.stepControlIcon.classList.add(
+              this.stepControlIcon.dataset.unpressedClass
+            );
             this.stepControlIcon.classList.remove(
               this.stepControlIcon.dataset.pressedClass,
             );
@@ -216,8 +224,8 @@
             // Populate button.
             this.toggleStepButton(step, false);
 
-            // Add button id attribute, add button event listener, passing current
-            // index to handler.
+            // Add button id attribute, add button event listener, passing
+            // current index to handler.
             step.button.setAttribute('aria-controls', stepId);
             step.button.addEventListener(
               'click',
@@ -256,10 +264,16 @@
           this.toggleControlButton(false);
 
           // Add aria-controls attribute.
-          this.stepControlButton.setAttribute('aria-controls', this.stepIds.join(' '));
+          this.stepControlButton.setAttribute(
+            'aria-controls',
+            this.stepIds.join(' ')
+          );
 
           // Add button event listener.
-          this.stepControlButton.addEventListener('click', this.handleControlButtonClick.bind(this));
+          this.stepControlButton.addEventListener(
+            'click',
+            this.handleControlButtonClick.bind(this)
+          );
         },
       };
 
