@@ -62,11 +62,13 @@ class StepByStepSummariesTest extends WebDriverTestBase {
 
     // Check summaries not visible.
     $this->assertSession()->pageTextNotContains('Step 1 summary');
+    $this->assertSession()->pageTextContains('Show summaries');
 
     $page = $this->getSession()->getPage();
 
     // Test 'Show summaries' button.
     $page->pressButton('Show summaries');
+    $this->assertSession()->pageTextContains('Hide summaries');
     $this->assertSession()->pageTextContains('Step 1 summary');
     $this->assertSession()->pageTextContains('Step 2 summary');
     $this->assertSession()->pageTextContains('Step 3 summary');
