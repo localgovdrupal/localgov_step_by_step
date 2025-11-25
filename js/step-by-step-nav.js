@@ -138,7 +138,6 @@
 
       // Show / hide all.
       $('.step-master').on('click', function toggleAllSteps() {
-
         const isExpanded = $(this).attr('aria-expanded') === 'true';
 
         if (isExpanded) {
