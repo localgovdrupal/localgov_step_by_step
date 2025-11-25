@@ -82,6 +82,9 @@
    * child HTML) which is not otherwise possible given the existing install
    * base.
    *
+   * @param {boolean} expanded
+   *   The state of the button to return the alias for.
+   *
    * @return {string}
    *   Text for the overall controll button.
    */
