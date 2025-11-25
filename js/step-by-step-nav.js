@@ -176,6 +176,11 @@
           title: stepTitleEl.textContent.trim(),
         };
 
+        // If there's no summary *content*, we need go no further.
+        if (!step.summary.children.length) {
+          return;
+        }
+
         // Insert button into DOM.
         stepTitleEl.append(buttonMarkup);
 
@@ -203,6 +208,12 @@
       /**
        * Set up master control button.
        */
+
+      // If there are no steps with content, we don't need to continue.
+      if (!steps.some((step) => (step.summary.children.length))) {
+        return;
+      }
+
       const stepControlTemplate = document.createElement("template");
       stepControlTemplate.innerHTML = Drupal.theme("controlButtonHtml");
       const stepControlMarkup = stepControlTemplate.content.cloneNode(true);
