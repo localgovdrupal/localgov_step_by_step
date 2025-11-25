@@ -74,10 +74,10 @@
         }
       }
 
-      var $summaries = $('ol.step-list .step .step__summary');
-      var anySummaries = false;
-      $summaries.each(function () {
-        if ($(this).text().trim() != '') {
+      const $summaries = $('ol.step-list .step .step__summary');
+      let anySummaries = false;
+      $summaries.each(function eachSummary() {
+        if ($(this).text().trim() !== '') {
           anySummaries = true;
           return false; // Exit loop early.
         }
@@ -128,8 +128,8 @@
         if (isVisible) {
           $(this).find('.step__summary').addClass('step-show-summary');
         }
-        var $stepSummary = $(this).find('.step__summary');
-        if ($stepSummary.text().trim() != '') {
+        const $stepSummary = $(this).find('.step__summary');
+        if ($stepSummary.text().trim() !== '') {
           $(this)
             .find('.step__title')
             .append(stepSummaryButton(isVisible, stepTitle));
