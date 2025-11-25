@@ -19,7 +19,9 @@
         let message;
 
         steps.forEach((step) => {
-          if (step.button.getAttribute(stepAriaAttr) !== attrValue) {
+          if (
+            step.button.getAttribute(stepAriaAttr) !== attrValue
+          ) {
             toggleStepButton(step, expanded);
           }
         });
@@ -90,6 +92,8 @@
        * @param {object} step
        *   A simple object containing button, link, summary, and title of a
        *   given step.
+       * @param {boolean} expanded
+       *   The expanded state to *set* on the step button.
        *
        * @return {undefined}
        */
