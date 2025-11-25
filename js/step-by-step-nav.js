@@ -3,7 +3,7 @@
  * Additional behaviour for the Step by step navigation.
  */
 
-(function (Drupal) {
+(function lgdStepByStepScript(Drupal) {
   Drupal.behaviors.stepByStepNav = {
     attach(context) {
       /**
