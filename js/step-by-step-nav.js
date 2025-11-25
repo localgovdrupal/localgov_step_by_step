@@ -138,13 +138,21 @@
 
       // Show / hide all.
       $('.step-master').on('click', function toggleAllSteps() {
-        $('.summaries-control i').toggleClass('fa-eye fa-eye-slash');
-        if ($(this).text() === stepByStep.showAllText) {
-          $(this).text(stepByStep.hideAllText).attr('aria-expanded', true);
-          summaryVisiblity($('.step-show'), 'show');
-        } else {
-          $(this).text(stepByStep.showAllText).attr('aria-expanded', false);
+
+        const isExpanded = $(this).attr('aria-expanded') === 'true';
+
+        if (isExpanded) {
+          $(this).text(stepByStep.showAllText).attr('aria-expanded', 'false');
+          $('.summaries-control i')
+            .addClass('fa-eye')
+            .removeClass('fa-eye-slash');
           summaryVisiblity($('.step-show'), 'hide');
+        } else {
+          $(this).text(stepByStep.hideAllText).attr('aria-expanded', 'true');
+          $('.summaries-control i')
+            .addClass('fa-eye-slash')
+            .removeClass('fa-eye');
+          summaryVisiblity($('.step-show'), 'show');
         }
       });
 
