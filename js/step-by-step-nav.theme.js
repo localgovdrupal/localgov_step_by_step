@@ -31,7 +31,7 @@
    * child HTML) which is not otherwise possible given the existing install
    * base.
    *
-   * @returns {string}
+   * @return {string}
    *   Text for the individual step buttons.
    */
   Drupal.theme.stepButtonText = function (expanded) {
@@ -49,7 +49,7 @@
    *   - button type attribute must exist
    *   - if using Fontawesome icons, the data attributes must be present
    *
-   * @returns {string}
+   * @return {string}
    *   HTML for the wrapper, button, icon, and whatever else is needed.
    */
   Drupal.theme.controlButtonHtml = function () {
@@ -76,7 +76,7 @@
    * child HTML) which is not otherwise possible given the existing install
    * base.
    *
-   * @returns {string}
+   * @return {string}
    *   Text for the overall controll button.
    */
   Drupal.theme.controlButtonText = function (expanded) {

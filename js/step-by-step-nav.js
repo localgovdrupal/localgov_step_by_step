@@ -12,7 +12,7 @@
        * @param {boolean} expanded
        *   The state to set on the individual summaries.
        *
-       * @returns {undefined}
+       * @return {undefined}
        */
       function toggleAllSummaries(expanded) {
         const attrValue = String(expanded);
@@ -41,7 +41,7 @@
        * @param {boolean} pressed
        *   The state to set on the control button.
        *
-       * @returns {undefined}
+       * @return {undefined}
        * @note As the label of the button changes, we're not using aria-pressed,
        *   but rather a custom data-pressed attribute to track the current state
        *   of the button. Per MDN, "If you want the label to toggle [...] don't
@@ -72,7 +72,7 @@
        *   A simple object containing button, link, summary, and title of a
        *   given step.
        *
-       * @returns {undefined}
+       * @return {undefined}
        */
       function handleControlButtonClick({ currentTarget, target }) {
         if (currentTarget !== target) {
@@ -91,7 +91,7 @@
        *   A simple object containing button, link, summary, and title of a
        *   given step.
        *
-       * @returns {undefined}
+       * @return {undefined}
        */
       function toggleStepButton({ button, summary, title }, expanded) {
         let ariaLabel;
@@ -118,7 +118,7 @@
        * @param {Event} event
        *   The event object passed in by the listener.
        *
-       * @returns {undefined}
+       * @return {undefined}
        */
       function handleStepButtonClick(index, { currentTarget, target }) {
         if (currentTarget !== target) {
@@ -147,7 +147,7 @@
        * better if they were siblings in the markup, but that would be a break-
        * ing change.
        *
-       * @returns {string}
+       * @return {string}
        *   An attribute value consisting of 's' + a zero-padded random value
        *   between 0-999.
        */
