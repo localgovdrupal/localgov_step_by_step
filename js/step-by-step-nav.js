@@ -99,19 +99,19 @@
             Drupal.theme.controlButtonText(pressed);
           this.stepControlButton.setAttribute(
             this.stepControlStateAttr,
-            pressed
+            pressed,
           );
 
           if (this.stepControlIcon && pressed) {
             this.stepControlIcon.classList.add(
-              this.stepControlIcon.dataset.pressedClass
+              this.stepControlIcon.dataset.pressedClass,
             );
             this.stepControlIcon.classList.remove(
               this.stepControlIcon.dataset.unpressedClass,
             );
           } else if (this.stepControlIcon && !pressed) {
             this.stepControlIcon.classList.add(
-              this.stepControlIcon.dataset.unpressedClass
+              this.stepControlIcon.dataset.unpressedClass,
             );
             this.stepControlIcon.classList.remove(
               this.stepControlIcon.dataset.pressedClass,
@@ -133,7 +133,8 @@
             return;
           }
 
-          const pressed = target.getAttribute(this.stepControlStateAttr) !== 'true';
+          const pressed =
+            target.getAttribute(this.stepControlStateAttr) !== 'true';
           this.toggleControlButton(pressed);
           this.toggleAllSummaries(pressed);
         },
@@ -266,13 +267,13 @@
           // Add aria-controls attribute.
           this.stepControlButton.setAttribute(
             'aria-controls',
-            this.stepIds.join(' ')
+            this.stepIds.join(' '),
           );
 
           // Add button event listener.
           this.stepControlButton.addEventListener(
             'click',
-            this.handleControlButtonClick.bind(this)
+            this.handleControlButtonClick.bind(this),
           );
         },
       };
