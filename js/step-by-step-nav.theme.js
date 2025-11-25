@@ -15,7 +15,7 @@
    * @return {string}
    *   Markup for individual step buttons.
    */
-  Drupal.theme.stepButtonHtml = function () {
+  Drupal.theme.stepButtonHtml = function stepButtonHtml() {
     return `
       <span class="step-summary-container">
         <button
@@ -40,7 +40,7 @@
    * @return {string}
    *   Text for the individual step buttons.
    */
-  Drupal.theme.stepButtonText = function (expanded) {
+  Drupal.theme.stepButtonText = function stepButtonText(expanded) {
     return expanded
       ? Drupal.t('Hide step summary')
       : Drupal.t('Show step summary');
@@ -58,7 +58,7 @@
    * @return {string}
    *   HTML for the wrapper, button, icon, and whatever else is needed.
    */
-  Drupal.theme.controlButtonHtml = function () {
+  Drupal.theme.controlButtonHtml = function controlButtonHtml() {
     return `
       <div class="summaries-control">
         <i
@@ -85,7 +85,7 @@
    * @return {string}
    *   Text for the overall controll button.
    */
-  Drupal.theme.controlButtonText = function (expanded) {
+  Drupal.theme.controlButtonText = function controlButtonText(expanded) {
     return expanded ? Drupal.t('Hide summaries') : Drupal.t('Show summaries');
   };
 })(Drupal);
