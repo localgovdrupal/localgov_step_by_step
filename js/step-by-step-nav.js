@@ -30,6 +30,36 @@
       const stepIds = [];
 
       /**
+       * Toggles the state of a step button.
+       *
+       * @param {object} step
+       *   A simple object containing button, link, summary, and title of a
+       *   given step.
+       * @param {boolean} expanded
+       *   The expanded state to *set* on the step button.
+       *
+       * @return {undefined}
+       */
+      function toggleStepButton({ button, summary, title }, expanded) {
+        let ariaLabel;
+
+        if (expanded) {
+          ariaLabel = Drupal.t('Hide step summary - !stepTitle', {
+            '!stepTitle': title,
+          });
+        } else {
+          ariaLabel = Drupal.t('Show step summary - !stepTitle', {
+            '!stepTitle': title,
+          });
+        }
+
+        button.innerHTML = Drupal.theme('stepButtonText', expanded);
+        button.setAttribute(stepAriaAttr, expanded);
+        button.setAttribute('aria-label', ariaLabel);
+        summary.classList[expanded ? 'add' : 'remove']('step-show-summary');
+      }
+
+      /**
        * Set up step buttons.
        */
       const stepButtonTemplate = document.createElement('template');
@@ -179,36 +209,6 @@
         const pressed = target.getAttribute(stepControlStateAttr) !== 'true';
         toggleControlButton(pressed);
         toggleAllSummaries(pressed);
-      }
-
-      /**
-       * Toggles the state of a step button.
-       *
-       * @param {object} step
-       *   A simple object containing button, link, summary, and title of a
-       *   given step.
-       * @param {boolean} expanded
-       *   The expanded state to *set* on the step button.
-       *
-       * @return {undefined}
-       */
-      function toggleStepButton({ button, summary, title }, expanded) {
-        let ariaLabel;
-
-        if (expanded) {
-          ariaLabel = Drupal.t('Hide step summary - !stepTitle', {
-            '!stepTitle': title,
-          });
-        } else {
-          ariaLabel = Drupal.t('Show step summary - !stepTitle', {
-            '!stepTitle': title,
-          });
-        }
-
-        button.innerHTML = Drupal.theme('stepButtonText', expanded);
-        button.setAttribute(stepAriaAttr, expanded);
-        button.setAttribute('aria-label', ariaLabel);
-        summary.classList[expanded ? 'add' : 'remove']('step-show-summary');
       }
 
       /**
