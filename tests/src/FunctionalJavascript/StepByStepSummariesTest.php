@@ -55,7 +55,6 @@ class StepByStepSummariesTest extends WebDriverTestBase {
       ]);
     }
 
-    $this->drupalPlaceBlock('views_block:localgov_step_by_step_navigation-steps_for_overview', ['region' => 'content']);
     $this->drupalPlaceBlock('step_part_of_block', ['region' => 'sidebar_second']);
 
     // Load overview page.
