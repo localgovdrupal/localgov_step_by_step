@@ -5,6 +5,14 @@
 
 (function lgdStepByStepScript(Drupal) {
   Drupal.behaviors.stepByStepNav = {
+    /**
+     * Creates step-list disclosures and an overall control button for them.
+     *
+     * @param {object} context
+     *   The current page DOM context for this iteration of the behavior.
+     *
+     * @return {undefined}
+     */
     attach(context) {
       /**
        * Set up global variables.
