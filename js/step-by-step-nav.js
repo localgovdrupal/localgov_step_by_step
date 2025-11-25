@@ -7,6 +7,93 @@
   Drupal.behaviors.stepByStepNav = {
     attach(context) {
       /**
+       * Set up global variables.
+       */
+      const [stepListEl] = once('sts-steplist', 'ol.step-list', context);
+
+      if (!stepListEl) {
+        return;
+      }
+
+      const stepEls = once('sts-step', '.step', stepListEl);
+      const stepAriaAttr = 'aria-expanded';
+      const stepControlStateAttr = 'data-pressed';
+      const steps = [];
+      const stepIds = [];
+
+      /**
+       * Set up step buttons.
+       */
+      const stepButtonTemplate = document.createElement('template');
+      stepButtonTemplate.innerHTML = Drupal.theme('stepButtonHtml');
+      stepEls.forEach((stepEl, index) => {
+        const stepId = getStepId();
+        const buttonMarkup = stepButtonTemplate.content.cloneNode(true);
+        const stepTitleEl = stepEl.querySelector('.step__title');
+        const step = {
+          button: buttonMarkup.querySelector('button'),
+          link: stepEl.querySelector('a[href]'),
+          summary: stepEl.querySelector('.step__summary'),
+          title: stepTitleEl.textContent.trim(),
+        };
+
+        // If there's no summary *content*, we need go no further.
+        if (!step.summary.children.length) {
+          return;
+        }
+
+        // Insert button into DOM.
+        stepTitleEl.append(buttonMarkup);
+
+        // Populate button.
+        toggleStepButton(step, false);
+
+        // Add button id attribute, add button event listener, passing current
+        // index to handler.
+        step.button.setAttribute('aria-controls', stepId);
+        step.button.addEventListener(
+          'click',
+          handleStepButtonClick.bind(null, index),
+        );
+
+        // Add id attribute to summary.
+        step.summary.id = stepId;
+
+        // Cache each step for later use.
+        steps.push(step);
+
+        // Likewise with the id.
+        stepIds.push(stepId);
+      });
+
+      /**
+       * Set up master control button.
+       */
+
+      // If there are no steps with content, we don't need to continue.
+      if (!steps.some((step) => step.summary.children.length)) {
+        return;
+      }
+
+      const stepControlTemplate = document.createElement('template');
+      stepControlTemplate.innerHTML = Drupal.theme('controlButtonHtml');
+      const stepControlMarkup = stepControlTemplate.content.cloneNode(true);
+      const stepControlButton = stepControlMarkup.querySelector('button');
+      const stepControlIcon = stepControlMarkup.querySelector('i.fas');
+
+      // Insert button into DOM.
+      stepListEl.parentElement.prepend(stepControlMarkup);
+
+      // Populate button.
+      toggleControlButton(false);
+
+      // Add aria-controls attribute.
+      stepControlButton.setAttribute('aria-controls', stepIds.join(' '));
+
+      // Add button event listener.
+      stepControlButton.addEventListener('click', handleControlButtonClick);
+
+      /**
        * Toggles all summaries
        *
        * @param {boolean} expanded
@@ -160,93 +247,6 @@
       function getStepId() {
         return `s${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`;
       }
-
-      /**
-       * Set up global variables.
-       */
-      const [stepListEl] = once('sts-steplist', 'ol.step-list', context);
-
-      if (!stepListEl) {
-        return;
-      }
-
-      const stepEls = once('sts-step', '.step', stepListEl);
-      const stepAriaAttr = 'aria-expanded';
-      const stepControlStateAttr = 'data-pressed';
-      const steps = [];
-      const stepIds = [];
-
-      /**
-       * Set up step buttons.
-       */
-      const stepButtonTemplate = document.createElement('template');
-      stepButtonTemplate.innerHTML = Drupal.theme('stepButtonHtml');
-      stepEls.forEach((stepEl, index) => {
-        const stepId = getStepId();
-        const buttonMarkup = stepButtonTemplate.content.cloneNode(true);
-        const stepTitleEl = stepEl.querySelector('.step__title');
-        const step = {
-          button: buttonMarkup.querySelector('button'),
-          link: stepEl.querySelector('a[href]'),
-          summary: stepEl.querySelector('.step__summary'),
-          title: stepTitleEl.textContent.trim(),
-        };
-
-        // If there's no summary *content*, we need go no further.
-        if (!step.summary.children.length) {
-          return;
-        }
-
-        // Insert button into DOM.
-        stepTitleEl.append(buttonMarkup);
-
-        // Populate button.
-        toggleStepButton(step, false);
-
-        // Add button id attribute, add button event listener, passing current
-        // index to handler.
-        step.button.setAttribute('aria-controls', stepId);
-        step.button.addEventListener(
-          'click',
-          handleStepButtonClick.bind(null, index),
-        );
-
-        // Add id attribute to summary.
-        step.summary.id = stepId;
-
-        // Cache each step for later use.
-        steps.push(step);
-
-        // Likewise with the id.
-        stepIds.push(stepId);
-      });
-
-      /**
-       * Set up master control button.
-       */
-
-      // If there are no steps with content, we don't need to continue.
-      if (!steps.some((step) => step.summary.children.length)) {
-        return;
-      }
-
-      const stepControlTemplate = document.createElement('template');
-      stepControlTemplate.innerHTML = Drupal.theme('controlButtonHtml');
-      const stepControlMarkup = stepControlTemplate.content.cloneNode(true);
-      const stepControlButton = stepControlMarkup.querySelector('button');
-      const stepControlIcon = stepControlMarkup.querySelector('i.fas');
-
-      // Insert button into DOM.
-      stepListEl.parentElement.prepend(stepControlMarkup);
-
-      // Populate button.
-      toggleControlButton(false);
-
-      // Add aria-controls attribute.
-      stepControlButton.setAttribute('aria-controls', stepIds.join(' '));
-
-      // Add button event listener.
-      stepControlButton.addEventListener('click', handleControlButtonClick);
     },
   };
 })(Drupal);
