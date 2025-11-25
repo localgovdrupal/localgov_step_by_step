@@ -67,6 +67,7 @@
             $('.summaries-control i')
               .addClass('fa-eye')
               .removeClass('fa-eye-slash');
+            $('.step-master').attr('aria-expanded', 'false');
             break;
 
           default:
