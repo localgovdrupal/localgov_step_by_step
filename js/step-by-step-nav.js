@@ -115,6 +115,8 @@
       /**
        * Handle clicks on Show/Hide all summaries button.
        *
+       * @param {number} index
+       *   The index of the step containing the clicked button.
        * @param {Event} event
        *   The event object passed in by the listener.
        *
