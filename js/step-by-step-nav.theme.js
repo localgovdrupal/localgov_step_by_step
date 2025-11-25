@@ -11,6 +11,9 @@
    *  - the wrapper element must exist
    *   - button aria-expanded attribute is controlled byt step-by-step-nav.js
    *   - button type attribute must exist
+   *
+   * @return {string}
+   *   Markup for individual step buttons.
    */
   Drupal.theme.stepButtonHtml = function () {
     return `
@@ -30,6 +33,9 @@
    * Provided as a way to permit themes to modify the button content (including
    * child HTML) which is not otherwise possible given the existing install
    * base.
+   *
+   * @param {boolean} expanded
+   *   The state of the button we're labeling.
    *
    * @return {string}
    *   Text for the individual step buttons.
