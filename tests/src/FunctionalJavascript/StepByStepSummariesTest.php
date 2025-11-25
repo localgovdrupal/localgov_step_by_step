@@ -106,8 +106,8 @@ class StepByStepSummariesTest extends WebDriverTestBase {
       $this->assertSession()->pageTextNotContains('Step 1 summary');
     }
     catch (\Exception $e) {
-      fwrite(STDERR, $this->getStepListDebugOutput('INITIAL PAGE - FAILED', $page));
-      throw $e;
+      $debug = $this->getStepListDebugOutput('INITIAL PAGE - FAILED', $page);
+      throw new \Exception($e->getMessage() . "\n\n" . $debug, $e->getCode(), $e);
     }
 
     // Test 'Show summaries' button.
@@ -118,8 +118,8 @@ class StepByStepSummariesTest extends WebDriverTestBase {
       $this->assertSession()->pageTextContains('Step 3 summary');
     }
     catch (\Exception $e) {
-      fwrite(STDERR, $this->getStepListDebugOutput('AFTER SHOW SUMMARIES - FAILED', $page));
-      throw $e;
+      $debug = $this->getStepListDebugOutput('AFTER SHOW SUMMARIES - FAILED', $page);
+      throw new \Exception($e->getMessage() . "\n\n" . $debug, $e->getCode(), $e);
     }
 
     // Test 'Hide summaries' button.
@@ -130,34 +130,55 @@ class StepByStepSummariesTest extends WebDriverTestBase {
       $this->assertSession()->pageTextNotContains('Step 3 summary');
     }
     catch (\Exception $e) {
-      fwrite(STDERR, $this->getStepListDebugOutput('AFTER HIDE SUMMARIES - FAILED', $page));
-      throw $e;
+      $debug = $this->getStepListDebugOutput('AFTER HIDE SUMMARIES - FAILED', $page);
+      throw new \Exception($e->getMessage() . "\n\n" . $debug, $e->getCode(), $e);
     }
 
     // Load step 2 page and test summary visibility.
     $this->drupalGet('/node/3');
-    $this->assertSession()->pageTextNotContains('Step 1 summary');
-    $this->assertSession()->pageTextNotContains('Step 3 summary');
-    $this->assertSession()->pageTextContains('Step 2 summary');
+    $page = $this->getSession()->getPage();
+    try {
+      $this->assertSession()->pageTextNotContains('Step 1 summary');
+      $this->assertSession()->pageTextNotContains('Step 3 summary');
+      $this->assertSession()->pageTextContains('Step 2 summary');
+    }
+    catch (\Exception $e) {
+      $debug = $this->getStepListDebugOutput('STEP 2 PAGE - FAILED', $page);
+      throw new \Exception($e->getMessage() . "\n\n" . $debug, $e->getCode(), $e);
+    }
 
     // Unpublish step 2.
     $step_pages[2]->status = NodeInterface::NOT_PUBLISHED;
     $step_pages[2]->save();
     $this->drupalGet('/node/1');
+    $page = $this->getSession()->getPage();
     // Test 'Show summaries' button.
     $page->pressButton('Show summaries');
-    $this->assertSession()->pageTextContains('Step 1 summary');
-    $this->assertSession()->pageTextNotContains('Step 2 summary');
-    $this->assertSession()->pageTextContains('Step 3 summary');
+    try {
+      $this->assertSession()->pageTextContains('Step 1 summary');
+      $this->assertSession()->pageTextNotContains('Step 2 summary');
+      $this->assertSession()->pageTextContains('Step 3 summary');
+    }
+    catch (\Exception $e) {
+      $debug = $this->getStepListDebugOutput('AFTER UNPUBLISH STEP 2 - FAILED', $page);
+      throw new \Exception($e->getMessage() . "\n\n" . $debug, $e->getCode(), $e);
+    }
 
     // Delete step 3.
     $step_pages[3]->delete();
     $this->drupalGet('/node/1');
+    $page = $this->getSession()->getPage();
     // Test 'Show summaries' button.
     $page->pressButton('Show summaries');
-    $this->assertSession()->pageTextContains('Step 1 summary');
-    $this->assertSession()->pageTextNotContains('Step 2 summary');
-    $this->assertSession()->pageTextNotContains('Step 3 summary');
+    try {
+      $this->assertSession()->pageTextContains('Step 1 summary');
+      $this->assertSession()->pageTextNotContains('Step 2 summary');
+      $this->assertSession()->pageTextNotContains('Step 3 summary');
+    }
+    catch (\Exception $e) {
+      $debug = $this->getStepListDebugOutput('AFTER DELETE STEP 3 - FAILED', $page);
+      throw new \Exception($e->getMessage() . "\n\n" . $debug, $e->getCode(), $e);
+    }
   }
 
 }
