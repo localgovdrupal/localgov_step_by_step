@@ -37,6 +37,7 @@
             // 'Hide all' control displayed if all steps are shown.
             if ($('.step__summary').length === $('.step-show-summary').length) {
               $('.step-master').text(stepByStep.hideAllText);
+              $('.step-master').attr('aria-expanded', 'true');
               $('.summaries-control i')
                 .addClass('fa-eye-slash')
                 .removeClass('fa-eye');
